@@ -1,0 +1,21 @@
+Models:
+	Usuario
+		PessoaFisica
+		PessoaJuridica
+
+	Produto
+		...
+
+	Encomenda
+		Produto
+		PessoaFisica
+		PessoaJuridica
+
+	Mensagem
+		PessoaFisica
+		PessoaJuridica
+
+	Vitrine
+		Produto
+		PessoaJuridica
+
