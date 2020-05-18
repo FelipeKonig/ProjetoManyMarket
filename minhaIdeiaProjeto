@@ -19,3 +19,8 @@ Models:
 		Produto
 		PessoaJuridica
 
+
+Usuario
+	Nome, nome_usuario, senha, idade, sexo;
+	PessoaFisica
+		

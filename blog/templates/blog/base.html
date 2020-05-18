@@ -38,7 +38,7 @@
     </header>
     <div class="container-fluid border">
       <div class="row">
-        <div class="col-md-8 border">
+        <div class="col-md-auto border">
           {% if user.is_authenticated %}
           <div class="col-sm-auto border">
             <button type="button" class="btn btn-info m-2 p-2 md-2">Meu perfil</button>
@@ -56,13 +56,15 @@
               name="userName">
               <div class="col-md-auto border">
                 <button type="button" class="btn btn-primary m-2 p-2 md-2">Confirmar</button>
-                <button type="button" class="btn btn-primary m-2 p-2 md-2">Cadastrar</button>
+                <a href="{% url 'registerUser' %}" role="button" class="btn btn-primary m-2 p-2 md-2">Cadastrar</a>
               </div>
             {% endif %}
           </div>
         </div>
       </div>
     </div>
+    {% block content%}
+    {% endblock %}
   </body>
 
 </html>

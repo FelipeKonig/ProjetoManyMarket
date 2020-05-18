@@ -1,0 +1,110 @@
+{% load static %}
+{% load bootstrap %}
+<html lang="pt-br">
+  <head>
+    <title> Projeto Web </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container-fluid p-4 m-2 border">
+        <div class="row">
+          <div class="col-md-8">
+            <h2>Vitrine Virtual</h2>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+      <h2>Cadastro</h2>
+      <form method="POST" class="post-form">
+        {% csrf_token %}
+          {{ form|bootstrap }}
+          <button type="submit" class="btn btn-secondary">Cadastrar</button>
+      </form>
+      <!-- <form method="registerUser" action="" class="post-form needs-validation" novalidate>{% csrf_token %}
+        <div class="form-group">
+          <label for="name">Nome completo:</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Coloque seu nome"
+          value="{{ current_name }}" required>
+          <div class="valid-feedback">Válido.</div>
+          <div class="invalid-feedback">Você deve ter um nome</div>
+        </div>
+        <div class="form-group">
+          <label for="userName">Nome de usuário:</label>
+          <input type="text" class="form-control" id="userName" name="userName" placeholder="Coloque seu nome de usuário"
+          value="{{ current_userName }}" required>
+          <div class="valid-feedback">Válido.</div>
+          <div class="invalid-feedback">Você deve ter um nome de usuário</div>
+        </div>
+        <div class="form-group">
+          <label for="password">Senha:</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Coloque sua senha"
+          value="{{ current_password }}" required>
+          <div class="valid-feedback">Válido.</div>
+          <div class="invalid-feedback">Você precisa por uma senha</div>
+        </div>
+         <div class="form-group">
+           <label for="age">Idade:</label>
+           <input type="text" class="form-control" id="age" name="age" placeholder="Coloque sua idade"
+           value="{{ current_age }}" required>
+           <div class="valid-feedback">Válido.</div>
+           <div class="invalid-feedback">Você precisa por sua idade</div>
+         </div>
+        <div class="form-group" for="genre">
+          Gênero:
+            <select class="custom-select" id="genre" name="genre" value="{{ current_genre }}" required>
+            <option value="">Selecione uma opção...</option>
+            <option value="male">Masculino</option>
+            <option value="female">Feminino</option>
+            <option value="other">Outro</option>
+         </select>
+         <div class="invalid-feedback">Defina seu sexo</div>
+        </div>
+        <div class="form-group form-check">
+            <input class="form-check-input" type="checkbox" name="remember" required>Eu concordo com os termos.</input>
+            <div class="valid-feedback">Válido.</div>
+            <div class="invalid-feedback">Aceite os termos para continuar</div>
+        </div> -->
+
+        {% if validate %}
+          <div class="toast" data-autohide="false">
+            <div class="toast-header">
+              <strong class="mr-auto text-info">Cadastro realizado com sucesso</strong>
+              <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+            </div>
+            <div class="toast-body">
+              Seja bem vindo!
+            </div>
+          </div>
+          <script>
+              $(document).ready(function(){
+              $('.toast').toast('show');
+              });
+              </script>
+        {% endif %}
+        <a href="{% url 'base' %}" role="button" class="btn btn-secondary">Voltar para a Home</a>
+        </form>
+        <script>
+          (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+              var forms = document.getElementsByClassName('needs-validation');
+              var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                  if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }
+                  form.classList.add('was-validated');
+                }, false);
+              });
+            }, false);
+          })();
+        </script>
+    </div>
