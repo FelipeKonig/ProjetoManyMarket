@@ -16,6 +16,7 @@ class User(models.Model):
     email = models.EmailField(max_length=200, default='')
     age = models.PositiveSmallIntegerField()
     sex = models.CharField(choices=sex_choices, max_length=10, default='')
+    city = models.CharField(max_length=200, default='')
 
     def _str_(self):
         return self.name
