@@ -15,13 +15,9 @@
             {{ form.password }}
           </div>
           <div class="col-sm m-3">
-            <input type="submit" value="Logar" role="button" class="btn btn-secondary"/>
+            <input type="submit" value="Logar" role="button" class="btn btn-primary"/>
             <input type="hidden" name="next" value="{{ next }}" />
           </div>
-          {% if form.errors %}
-            <br>
-            <div class="col-sm center">Your username and password didn't match. Please try again.</div>
-          {% endif %}
         </div>
       </div>
     </div>

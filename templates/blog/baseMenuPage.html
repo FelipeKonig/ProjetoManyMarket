@@ -19,14 +19,17 @@
             name="user_password">
             <div class="col-md-auto border">
               <a href="#" role="button" class="btn btn-primary m-2 p-2 md-2">Confirmar</a>
-              <a href="{% url 'register_user' %}" role="button" class="btn btn-primary m-2 p-2 md-2">Cadastrar</a>
+
             </div> -->
-            <form method="post" action="{% url 'login' %}">
-              {% csrf_token %}
-                  <input type="submit" role="button" class="btn btn-primary m-2 p-2 md-2 center" value="Fazer login" />
-                  <input type="hidden" name="next" value="{{ next }}" />
-            </form>
+              <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                    <input type="submit" role="button" class="btn btn-primary m-2 p-2 md-2 center" value="Fazer login" />
+                    <input type="hidden" name="next" value="{{ next }}" />
+                    <a href="{% url 'register' %}" role="button" class="btn btn-primary m-2 p-2 md-2">Cadastrar</a>
+              </form>
+
           {% endif %}
+
       </div>
     </div>
   </div>
