@@ -3,7 +3,7 @@
 
 {% block content %}
   <div class="container">
-    <h2>Cadastro</h2>
+    <p class="display-4">Cadastro</p>
     {% if register %}
       <div class="toast" data-autohide="false">
         <div class="toast-header">
@@ -24,8 +24,8 @@
     <form method="POST" class="post-form">
       {% csrf_token %}
         {{ form|bootstrap }}
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
-        <a href="{% url 'home' %}" role="button" class="btn btn-primary">Voltar para a Home</a>
+        <button type="submit" class="btn btn-info">Cadastrar</button>
+        <a href="{% url 'home' %}" role="button" class="btn btn-info">Voltar para a Home</a>
     </form>
   </div>
   <br>

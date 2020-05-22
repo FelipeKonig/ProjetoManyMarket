@@ -1,0 +1,17 @@
+{% extends "blog/basePage.html" %}
+{% load bootstrap %}
+
+{% block content %}
+  <div class="container">
+    <p class="display-4">Cadastro da sua vitrine virtual</p>
+    <form method="POST" class="post-form">
+      {% csrf_token %}
+      {{ form|bootstrap }}
+      <br>
+      <button type="submit" class="btn btn-info">Criar vitrine</button>
+      <a href="{% url 'home' %}" role="button" class="btn btn-info">Voltar para a Home</a>
+    </form>
+  </div>
+  <br>
+  <br>
+{% endblock %}

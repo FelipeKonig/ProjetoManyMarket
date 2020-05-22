@@ -5,16 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   </head>
   <body>
     <header>
-      <div class="container-fluid p-4 m-2 border">
+      <div class="container-fluid p-4 m-2 border" id="base_header">
         <div class="row">
           <div class="col-md-8">
-            <a href="{% url 'home' %}" class="display-3" >Vitrine Virtual</a>
+            <a href="{% url 'home' %}" class="display-3" id="title_base">Vitrine Virtual</a>
           </div>
           {% if needSearchCity %}
             <div class="col-md-4">
@@ -40,6 +42,8 @@
     </header>
     {% block content%}
     {% endblock %}
+    <br>
+    <br>
     <footer>
       <div class="container-fluid border">
         <div class="row">

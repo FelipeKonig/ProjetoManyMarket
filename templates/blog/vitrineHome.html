@@ -1,0 +1,27 @@
+{% extends 'blog/baseMenuPage.html' %}
+
+{% block content %}
+  {% if showcase_exist %}
+    <div class="container-fluid col-sm-auto">
+      <div class="row">
+        <div class="col-sm-auto center">
+          <p class="display-3" id="title_base">Você possui sua vitrine virtual</p>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="container-fluid col-sm-auto border">
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-9 border">
+          <p class=" mx-auto m-3 display-4 text-center" id="title_showcase">
+            Oops!! Infelizmente você ainda não possui sua vitrine virtual
+            <a type="button" class="btn btn-info m-4 p-2 md-5" href="{% url 'vitrine_register' %}">
+              Clique aqui caso você deseja criar sua própria vitrine
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

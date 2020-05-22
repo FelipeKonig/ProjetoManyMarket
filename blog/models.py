@@ -3,20 +3,17 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-class User(models.Model):
+class Vitrine(models.Model):
 
-    sex_choices = (
-        ("Masculino", "Masculino"),
-        ("Feminino", "Feminino"),
-        ("N", "Nenhuma das opções")
+    categoria = (
+        ("Informatica", "Informática"),
+        ("Celulares", "Celulares"),
+        ("Moda", "Moda")
     )
-    name = models.CharField(max_length=200)
-    user_name = models.CharField(max_length=250)
-    password = models.CharField(max_length=250)
-    email = models.EmailField(max_length=200, default='')
-    age = models.PositiveSmallIntegerField()
-    sex = models.CharField(choices=sex_choices, max_length=10, default='')
-    city = models.CharField(max_length=200, default='')
+    proprietario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    nome = models.CharField(max_length=200)
+    cidade = models.CharField(max_length=200)
+    categoria = models.CharField(max_length=20, choices=categoria)
 
-    def _str_(self):
-        return self.name
+    def __str__(self):
+        return self.nome
