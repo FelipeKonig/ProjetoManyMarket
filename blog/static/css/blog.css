@@ -12,6 +12,10 @@ body{
   font-variant: small-caps;
 }
 
+#menu_page_vitrine{
+  background-color: #e3dacf;
+}
+
 /* #title_showcase{
   font-style: oblique;
   font-family: sans-serif;

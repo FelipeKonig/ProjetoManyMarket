@@ -1,14 +1,48 @@
 {% extends 'blog/baseMenuPage.html' %}
+{% load static %}
 
 {% block content %}
   {% if showcase_exist %}
-    <div class="container-fluid col-sm-auto">
+    <div class="container-fluid col-md-12 m-2" id="menu_page_vitrine">
       <div class="row">
-        <div class="col-sm-auto center">
-          <p class="display-3" id="title_base">Você possui sua vitrine virtual</p>
+        <nav class="col-lg nav nav-pills m-2">
+          <a href="#" class="m-2" data-toggle="popover" data-placement="bottom" data-trigger="hover"
+          data-content="Essa função ainda não está funcionando D:">
+            Ver mensagens de clientes
+          </a>
+          <a href="#"  class="m-2" data-toggle="popover" data-placement="bottom" data-trigger="hover"
+          data-content="Essa função ainda não está funcionando D:">
+            Ver encomendas
+          </a>
+          <a href="#" class="m-2" data-toggle="popover" data-placement="bottom" data-trigger="hover"
+          data-content="Essa função ainda não está funcionando D:">
+            Gerenciamento de produtos
+          </a>
+        </nav>
+      </div>
+      <script>
+        $(document).ready(function(){
+          $('[data-toggle="popover"]').popover();
+        });
+      </script>
+    </div>
+    <div class="container-fluid col-sm m-3">
+      <div class="row">
+        <div class="col-lg-2 border">
+          <div class="row">
+            <h5 class="col-sm border font-weight-light text-center">Sua categoria de produtos</h5>
+          </div>
+        </div>
+        <div class="col-sm-6 border">
+          <h5 class="col-sm m-2 border font-weight-light">Seus produtos</h5>
+        </div>
+        <div class="col-sm-4 border">
+          <img src="{% static "media/vitrine.png" %}" class="img-thumbnail mt-0" alt="Hi!">
+          <h4 class="col-sm m-2 font-weight-light text-center">SUADHAIDH</h4>
         </div>
       </div>
     </div>
+
   {% else %}
     <div class="container-fluid col-sm-auto border">
       <div class="row">
