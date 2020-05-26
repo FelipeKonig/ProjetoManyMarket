@@ -12,10 +12,10 @@ class RegisterForm(UserCreationForm):
     	fields = ["username", "email", "first_name", "last_name", "password1", "password2"]
 
 class VitrineForm(forms.ModelForm):
-
+    
     class Meta:
         model = Vitrine
-        fields = ('nome', 'cidade', 'categoria',)
+        fields = ('nome', 'cidade', 'categoria','descricao')
 
 # class UserForm(forms.ModelForm):
 #     password = forms.CharField(widget=forms.PasswordInput)

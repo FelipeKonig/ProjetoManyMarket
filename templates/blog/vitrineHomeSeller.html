@@ -1,4 +1,4 @@
-{% extends 'blog/baseMenuPage.html' %}
+{% extends 'blog/basePage.html' %}
 {% load static %}
 
 {% block content %}
@@ -6,17 +6,17 @@
     <div class="container-fluid col-md-12 m-2" id="menu_page_vitrine">
       <div class="row">
         <nav class="col-lg nav nav-pills m-2">
-          <a href="#" class="m-2" data-toggle="popover" data-placement="bottom" data-trigger="hover"
+          <a href="#" type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom" data-trigger="hover"
           data-content="Essa função ainda não está funcionando D:">
             Ver mensagens de clientes
           </a>
-          <a href="#"  class="m-2" data-toggle="popover" data-placement="bottom" data-trigger="hover"
+          <a href="#"  type="button "class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom" data-trigger="hover"
           data-content="Essa função ainda não está funcionando D:">
             Ver encomendas
           </a>
-          <a href="#" class="m-2" data-toggle="popover" data-placement="bottom" data-trigger="hover"
-          data-content="Essa função ainda não está funcionando D:">
-            Gerenciamento de produtos
+          <a href="{% url 'vitrine_management' %}" class="btn btn-info m-2 p-2 md-2">Gerenciamento de produtos</a>
+          <a href="{% url 'home' %}" class="btn btn-info m-2">
+            modo cliente
           </a>
         </nav>
       </div>
@@ -37,12 +37,15 @@
           <h5 class="col-sm m-2 border font-weight-light">Seus produtos</h5>
         </div>
         <div class="col-sm-4 border">
-          <img src="{% static "media/vitrine.png" %}" class="img-thumbnail mt-0" alt="Hi!">
-          <h4 class="col-sm m-2 font-weight-light text-center">SUADHAIDH</h4>
+          <img src="{% static "media/vitrine.png" %}" class="img-thumbnail mt-0"
+           alt="Imagem padrão para todas as vetrines que contém uma lojinha cinza desenhada com detalhes em azul, marrom e laranja">
+          <h3 class="col-sm m-3 font-weight-light text-center">{{ vitrine.nome }}</h3>
+          <div class="col-sm-auto mt-5 ml-3">
+            <h5 class="font-weight-light"> Descrição: {{vitrine.descricao }}</h5>
+          </div>
         </div>
       </div>
     </div>
-
   {% else %}
     <div class="container-fluid col-sm-auto border">
       <div class="row">

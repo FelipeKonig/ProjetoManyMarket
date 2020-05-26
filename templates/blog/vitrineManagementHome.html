@@ -1,0 +1,58 @@
+{% extends 'blog/basePage.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container-fluid col-md-12 m-2" id="menu_page_vitrine">
+      <div class="row">
+        <nav class="col-lg nav nav-pills m-2">
+          <a href="#" type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom" data-trigger="hover"
+          data-content="Essa função ainda não está funcionando D:">
+            Ver mensagens de clientes
+          </a>
+          <a href="#"  type="button "class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom" data-trigger="hover"
+          data-content="Essa função ainda não está funcionando D:">
+            Ver encomendas
+          </a>
+          <a href="{% url 'vitrine_management' %}" class="btn btn-info m-2 p-2 md-2">Gerenciamento de produtos</a>
+          <a href="{% url 'home' %}" class="btn btn-info m-2">
+            modo cliente
+          </a>
+        </nav>
+      </div>
+      <script>
+        $(document).ready(function(){
+          $('[data-toggle="popover"]').popover();
+        });
+      </script>
+    </div>
+    <div class="container-fluid col-sm m-3 border">
+      <div class="row">
+        <div class="col-lg-2 border">
+          <div class="row">
+            <nav class="col-sm border font-weight-light nav flex-column">
+              <a class="col-sm border font-weight-light nav-link" href="#">Cadastrar produto</a>
+              <a class="col-sm border font-weight-light nav-link" href="#" data-toggle="popover" data-placement="bottom"
+              data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+              Entrar no estoque
+              </a>
+              <a class="col-sm border font-weight-light nav-link" href="#" data-toggle="popover" data-placement="bottom"
+              data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+                Ver encomendas entregues
+              </a>
+            </nav>
+          </div>
+        </div>
+        <div class="col-md-10 border">
+          <div class="row">
+            <div class="col-sm-12 border">
+              <h5 class="col-sm m-2 border font-weight-light">Produtos adicionados recentemente</h5>
+            </div>
+            <div class="col-sm-12 mt-5 border">
+              <h5 class="col-sm m-2 border font-weight-light">Últimas encomendas</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

@@ -28,7 +28,7 @@ def vitrine_register(request):
             vitrine = form.save(commit=False)
             vitrine.proprietario = request.user
             vitrine.save()
-            return redirect('vitrine_home')
+            return redirect('vitrine_home_seller')
     else:
         form = VitrineForm()
     return render(request, 'blog/vitrineRegister.html', {'form': form})
@@ -39,16 +39,24 @@ def home_page(request):
         needSearchCity = False
     return render(request, 'blog/home.html', {'needSearchCity': needSearchCity})
 
-def vitrine_home(request):
+@login_required
+def vitrine_home_seller(request):
     showcase_exist = False
     user = request.user
     print(user)
     vitrine = Vitrine.objects.filter(proprietario=user)
     if not vitrine:
-        return render(request, 'blog/vitrineHome.html', {'showcase_exist': showcase_exist})
+        return render(request, 'blog/vitrineHomeSeller.html', {'showcase_exist': showcase_exist})
     else:
         showcase_exist = True
-        return render(request, 'blog/vitrineHome.html', {'showcase_exist': showcase_exist})
+        vitrine = get_object_or_404(Vitrine, proprietario=user)
+        print(vitrine.nome)
+        return render(request, 'blog/vitrineHomeSeller.html', {'showcase_exist': showcase_exist, 'vitrine': vitrine })
+
+@login_required
+def vitrine_management(request):
+    return render(request, 'blog/vitrineManagementHome.html')
+
 
 # def register_user(request):
 #     form = UserForm(request.POST)

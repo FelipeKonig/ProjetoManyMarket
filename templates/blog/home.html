@@ -1,1 +1,34 @@
-{% extends 'blog/baseMenuPage.html' %}
+{% extends 'blog/basePage.html' %}
+{% block content %}
+  <div class="container-fluid border">
+    <div class="row">
+      <div class="col-md-auto border">
+        {% if user.is_authenticated %}
+        <div class="col-sm-auto border">
+          <button type="button" class="btn btn-info m-2 p-2 md-2">Meu perfil</button>
+          <a href="{% url 'vitrine_home_seller' %}" type="button" class="btn btn-info m-2 p-2 md-2">Modo Vitrine</a>
+          <button type="button" class="btn btn-info m-2 p-2 md-2">Minhas mensagens</button>
+          <a type="button" class="btn btn-info m-2 p-2 md-2" href="{% url 'logout' %}">Sair</a>
+        </div>
+        {% else %}
+            <!-- <label for="userName" class="mr-md-2">Usuário:</label>
+            <input type="text" class="form-control mb-2 mr-sm-3" id="user_name" placeholder="nome de usúario"
+            name="user_name">
+            <label for="userPassword" class="mr-md-2">Senha:</label>
+            <input type="password" class="form-control mb-2 mr-sm-2" id="user_password" placeholder="senha"
+            name="user_password">
+            <div class="col-md-auto border">
+              <a href="#" role="button" class="btn btn-primary m-2 p-2 md-2">Confirmar</a>
+
+            </div> -->
+              <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                    <input type="submit" role="button" class="btn btn-info m-2 p-2 md-2 center" value="Fazer login" />
+                    <input type="hidden" name="next" value="{{ next }}" />
+                    <a href="{% url 'register' %}" role="button" class="btn btn-info m-2 p-2 md-2">Cadastrar</a>
+              </form>
+          {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
