@@ -16,8 +16,6 @@ body{
   background-color: #e3dacf;
 }
 
-/* #title_showcase{
-  font-style: oblique;
-  font-family: sans-serif;
-  font-variant: small-caps;
-} */
+.card{
+  background-color: #cbd0d6;
+}

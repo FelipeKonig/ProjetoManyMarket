@@ -3,8 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from .forms import RegisterForm, VitrineForm
-from .models import Vitrine
+from .forms import RegisterForm, VitrineForm, ProdutoForm
+from .models import Vitrine, Produto
 
 # Create your views here.
 def register(request):
@@ -33,6 +33,21 @@ def vitrine_register(request):
         form = VitrineForm()
     return render(request, 'blog/vitrineRegister.html', {'form': form})
 
+@login_required
+def produto_register(request):
+        register = False
+        if request.method == "POST":
+            form = ProdutoForm(request.POST)
+            if form.is_valid():
+                register = True
+                produto = form.save(commit=False)
+                vitrine = get_object_or_404(Vitrine, proprietario= request.user)
+                produto.proprietario = vitrine
+                produto.save()
+        else:
+            form = ProdutoForm()
+        return render(request, 'blog/produtoRegister.html', {'form': form, 'register': register})
+
 def home_page(request):
     needSearchCity = True
     if request.user.is_authenticated:
@@ -43,20 +58,23 @@ def home_page(request):
 def vitrine_home_seller(request):
     showcase_exist = False
     user = request.user
-    print(user)
     vitrine = Vitrine.objects.filter(proprietario=user)
     if not vitrine:
         return render(request, 'blog/vitrineHomeSeller.html', {'showcase_exist': showcase_exist})
     else:
         showcase_exist = True
         vitrine = get_object_or_404(Vitrine, proprietario=user)
-        print(vitrine.nome)
-        return render(request, 'blog/vitrineHomeSeller.html', {'showcase_exist': showcase_exist, 'vitrine': vitrine })
+        produtos = Produto.objects.filter(proprietario=vitrine)
+        return render(request, 'blog/vitrineHomeSeller.html', {'showcase_exist': showcase_exist,
+        'vitrine': vitrine, 'produtos': produtos })
 
 @login_required
 def vitrine_management(request):
-    return render(request, 'blog/vitrineManagementHome.html')
-
+    user = request.user
+    vitrine = Vitrine.objects.filter(proprietario=user)
+    vitrine = get_object_or_404(Vitrine, proprietario=user)
+    produtos = Produto.objects.filter(proprietario=vitrine)
+    return render(request, 'blog/vitrineManagementHome.html', {'produtos': produtos })
 
 # def register_user(request):
 #     form = UserForm(request.POST)

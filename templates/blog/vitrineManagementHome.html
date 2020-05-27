@@ -13,10 +13,9 @@
           data-content="Essa função ainda não está funcionando D:">
             Ver encomendas
           </a>
+          <a href="{% url 'vitrine_home_seller' %}" class="btn btn-info m-2">minha vitrine</a>
           <a href="{% url 'vitrine_management' %}" class="btn btn-info m-2 p-2 md-2">Gerenciamento de produtos</a>
-          <a href="{% url 'home' %}" class="btn btn-info m-2">
-            modo cliente
-          </a>
+          <a href="{% url 'home' %}" class="btn btn-info m-2">modo cliente</a>
         </nav>
       </div>
       <script>
@@ -30,12 +29,12 @@
         <div class="col-lg-2 border">
           <div class="row">
             <nav class="col-sm border font-weight-light nav flex-column">
-              <a class="col-sm border font-weight-light nav-link" href="#">Cadastrar produto</a>
-              <a class="col-sm border font-weight-light nav-link" href="#" data-toggle="popover" data-placement="bottom"
+              <a class="col-sm border font-weight-light nav-link" href="{% url 'produto_register' %}">Cadastrar produto</a>
+              <a class="col-sm border font-weight-light nav-link" href="#" data-toggle="popover" data-placement="right"
               data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
               Entrar no estoque
               </a>
-              <a class="col-sm border font-weight-light nav-link" href="#" data-toggle="popover" data-placement="bottom"
+              <a class="col-sm border font-weight-light nav-link" href="#" data-toggle="popover" data-placement="right"
               data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
                 Ver encomendas entregues
               </a>
@@ -46,7 +45,29 @@
           <div class="row">
             <div class="col-sm-12 border">
               <h5 class="col-sm m-2 border font-weight-light">Produtos adicionados recentemente</h5>
+              <br>
+              <div class="row">
+                {% for produto in produtos %}
+                <div class="card m-2" style="width:200px">
+                  <img class="card-img-top" src="{% static "media/produto.jpeg" %}"
+                  alt="Imagem padrão para os produtos na qual contém vários objetos desenhados como roupa, bolsa, camera, celular e afins">
+                  <div class="card-body">
+                    <h4 class="card-title">{{ produto.nome }}</h4>
+                    <p class="card-text">R$ {{ produto.valor }}.</p>
+                    <a href="#" class="btn btn-primary data-toggle="popover" data-placement="right" data-trigger="hover"
+                    data-content="Essa função ainda não está funcionando D:"">Atualizar</a>
+                  </div>
+                </div>
+                {% empty %}
+                <h2 class="m-2 font-weight-light">Sua vitrine não possui nenhum produto</h2>
+                {% endfor %}
+              </div>
             </div>
+            <script>
+              $(document).ready(function(){
+                $('[data-toggle="popover"]').popover();
+              });
+            </script>
             <div class="col-sm-12 mt-5 border">
               <h5 class="col-sm m-2 border font-weight-light">Últimas encomendas</h5>
             </div>
@@ -54,5 +75,4 @@
         </div>
       </div>
     </div>
-
 {% endblock %}

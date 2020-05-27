@@ -6,42 +6,69 @@
     <div class="container-fluid col-md-12 m-2" id="menu_page_vitrine">
       <div class="row">
         <nav class="col-lg nav nav-pills m-2">
-          <a href="#" type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom" data-trigger="hover"
-          data-content="Essa função ainda não está funcionando D:">
+          <a href="#" type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover"
+          data-placement="bottom" data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
             Ver mensagens de clientes
           </a>
-          <a href="#"  type="button "class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom" data-trigger="hover"
-          data-content="Essa função ainda não está funcionando D:">
+          <a href="#"  type="button "class="btn btn-info m-2 p-2 md-2" data-toggle="popover"
+          data-placement="bottom" data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
             Ver encomendas
           </a>
+          <a href="{% url 'vitrine_home_seller' %}" class="btn btn-info m-2" id="kkkk_123" >minha vitrine</a>
           <a href="{% url 'vitrine_management' %}" class="btn btn-info m-2 p-2 md-2">Gerenciamento de produtos</a>
-          <a href="{% url 'home' %}" class="btn btn-info m-2">
-            modo cliente
-          </a>
+          <a href="{% url 'home' %}" class="btn btn-info m-2">modo cliente</a>
         </nav>
       </div>
-      <script>
-        $(document).ready(function(){
-          $('[data-toggle="popover"]').popover();
-        });
-      </script>
     </div>
     <div class="container-fluid col-sm m-3">
       <div class="row">
         <div class="col-lg-2 border">
           <div class="row">
-            <h5 class="col-sm border font-weight-light text-center">Sua categoria de produtos</h5>
+            <h5 class="col-sm-12 border font-weight-light text-center">Sua categoria de produtos</h5>
+            <nav class="col-sm-12 mt-2 nav flex-column text-center">
+              <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
+              data-content="Essa função ainda não está funcionando D:">
+              Celulares
+              </a>
+              <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
+              data-content="Essa função ainda não está funcionando D:">
+              Informática
+              </a>
+            </nav>
           </div>
         </div>
-        <div class="col-sm-6 border">
+        <div class="col-sm-auto mr-auto border">
           <h5 class="col-sm m-2 border font-weight-light">Seus produtos</h5>
+          <br>
+          <div class="row">
+            {% for produto in produtos %}
+            <div class="card m-2" style="width:200px;">
+              <img class="card-img-top" src="{% static "media/produto.jpeg" %}"
+              alt="Imagem padrão para os produtos na qual contém vários objetos desenhados como roupa, bolsa, camera, celular e afins">
+              <div class="card-body">
+                <h4 class="card-title">{{ produto.nome }}</h4>
+                <p class="card-text">R$ {{ produto.valor }}.</p>
+                <a href="#" class="btn btn-primary" data-toggle="popover" data-placement="bottom" data-trigger="hover"
+                data-content="Essa função ainda não está funcionando D:">Atualizar</a>
+              </div>
+            </div>
+            {% empty %}
+            <h2 class="m-2 font-weight-light">Sua vitrine não possui nenhum produto</h2>
+            {% endfor %}
+          </div>
         </div>
+        <script>
+          $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
+          });
+        </script>
         <div class="col-sm-4 border">
+          <br>
           <img src="{% static "media/vitrine.png" %}" class="img-thumbnail mt-0"
            alt="Imagem padrão para todas as vetrines que contém uma lojinha cinza desenhada com detalhes em azul, marrom e laranja">
           <h3 class="col-sm m-3 font-weight-light text-center">{{ vitrine.nome }}</h3>
           <div class="col-sm-auto mt-5 ml-3">
-            <h5 class="font-weight-light"> Descrição: {{vitrine.descricao }}</h5>
+            <h5 class="font-weight-light"> {{vitrine.descricao }} </h5>
           </div>
         </div>
       </div>
