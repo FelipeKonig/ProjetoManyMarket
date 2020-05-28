@@ -3,24 +3,7 @@
 
 {% block content %}
   <div class="container">
-    <p class="display-4">Cadastro</p>
-    {% if register %}
-      <div class="toast" data-autohide="false">
-        <div class="toast-header">
-          <strong class="mr-auto text-info">Cadastro realizado com sucesso</strong>
-          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
-        </div>
-        <div class="toast-body">
-            <p>Seja bem vindo!</p>
-          <a href="{% url 'home' %}" role="button" class="btn btn-primary">Voltar para a Home</a>
-        </div>
-      </div>
-      <script>
-          $(document).ready(function(){
-          $('.toast').toast('show');
-          });
-          </script>
-    {% endif %}
+    <p class="display-4">Cadastro de usuário</p>
     <form method="POST" class="post-form">
       {% csrf_token %}
         {{ form|bootstrap }}

@@ -3,20 +3,19 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from .forms import RegisterForm, VitrineForm, ProdutoForm
-from .models import Vitrine, Produto
+from .forms import RegisterForm, VitrineForm, ProdutoForm, PerfilForm
+from .models import Vitrine, Produto, Perfil, Encomenda, Comentario
 
 # Create your views here.
 def register(request):
-    register = False
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            register = True
             form.save()
+            return redirect('home')
     else:
         form = RegisterForm()
-    return render(request, "registration/register.html", {"form":form, 'register': register})
+        return render(request, "registration/register.html", {"form":form})
 
 @login_required
 def vitrine_register(request):
@@ -35,18 +34,29 @@ def vitrine_register(request):
 
 @login_required
 def produto_register(request):
-        register = False
         if request.method == "POST":
             form = ProdutoForm(request.POST)
             if form.is_valid():
-                register = True
                 produto = form.save(commit=False)
-                vitrine = get_object_or_404(Vitrine, proprietario= request.user)
+                vitrine = Vitrine.objects.filter(proprietario=user)
                 produto.proprietario = vitrine
                 produto.save()
+                return redirect('vitrine_home_seller')
         else:
             form = ProdutoForm()
-        return render(request, 'blog/produtoRegister.html', {'form': form, 'register': register})
+        return render(request, 'blog/produtoRegister.html', {'form': form})
+
+def perfil_register(request):
+    if request.method == "POST":
+        form = PerfilForm(request.POST)
+        if form.is_valid():
+            perfil = form.save(commit=False)
+            perfil.usuario = request.user
+            perfil.save()
+            return redirect('home')
+    else:
+        form = PerfilForm()
+    return render(request, "blog/perfilRegister.html", {"form":form})
 
 def home_page(request):
     needSearchCity = True
@@ -58,7 +68,7 @@ def home_page(request):
 def vitrine_home_client(request, pk):
     vitrine = get_object_or_404(Vitrine, pk=pk)
     produtos = Produto.objects.filter(proprietario=vitrine)
-    return render(request, 'blog/vitrineHomeClient.html', {'vitrine': vitrine, 'produtos': produtos, 'vitrine': vitrine })
+    return render(request, 'blog/vitrineHomeClient.html', {'vitrine': vitrine, 'produtos': produtos})
 
 @login_required
 def vitrine_home_seller(request):
