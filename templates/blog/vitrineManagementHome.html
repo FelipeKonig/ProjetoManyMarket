@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-    <div class="container-fluid col-md-12 m-2" id="menu_page_vitrine">
+    <div class="container-fluid col-md-12 m-2" id="menu_page">
       <div class="row">
         <nav class="col-lg nav nav-pills m-2">
           <a href="#" type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom" data-trigger="hover"
@@ -26,7 +26,7 @@
     </div>
     <div class="container-fluid col-sm m-3 border">
       <div class="row">
-        <div class="col-lg-2 border">
+        <div class="col-lg-2">
           <div class="row">
             <nav class="col-sm border font-weight-light nav flex-column">
               <a class="col-sm border font-weight-light nav-link" href="{% url 'produto_register' %}">Cadastrar produto</a>
@@ -44,7 +44,7 @@
         <div class="col-md-10 border">
           <div class="row">
             <div class="col-sm-12 border">
-              <h5 class="col-sm m-2 border font-weight-light">Produtos adicionados recentemente</h5>
+              <h3 class="col-sm m-2 border font-weight-light">Produtos adicionados recentemente</h3>
               <br>
               <div class="row">
                 {% for produto in produtos %}

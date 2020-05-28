@@ -12,8 +12,24 @@ body{
   font-variant: small-caps;
 }
 
-#menu_page_vitrine{
+#menu_category{
+  background-color: #edddc7;
+}
+
+#menu_filter{
+  border-style: solid;
+  border-width: 2px;
+  border-color: #c7b89b;
+}
+
+#menu_page{
   background-color: #e3dacf;
+}
+
+.col-lg-2{
+  border-style: solid;
+  border-width: 2px;
+  border-color: #c7b89b;
 }
 
 .card{

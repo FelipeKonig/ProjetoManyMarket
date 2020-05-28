@@ -50,9 +50,15 @@ def produto_register(request):
 
 def home_page(request):
     needSearchCity = True
+    vitrines = Vitrine.objects.filter()
     if request.user.is_authenticated:
         needSearchCity = False
-    return render(request, 'blog/home.html', {'needSearchCity': needSearchCity})
+    return render(request, 'blog/home.html', {'needSearchCity': needSearchCity, 'vitrines': vitrines})
+
+def vitrine_home_client(request, pk):
+    vitrine = get_object_or_404(Vitrine, pk=pk)
+    produtos = Produto.objects.filter(proprietario=vitrine)
+    return render(request, 'blog/vitrineHomeClient.html', {'vitrine': vitrine, 'produtos': produtos, 'vitrine': vitrine })
 
 @login_required
 def vitrine_home_seller(request):
@@ -63,7 +69,7 @@ def vitrine_home_seller(request):
         return render(request, 'blog/vitrineHomeSeller.html', {'showcase_exist': showcase_exist})
     else:
         showcase_exist = True
-        vitrine = get_object_or_404(Vitrine, proprietario=user)
+        vitrine = Vitrine.objects.get(proprietario=user)
         produtos = Produto.objects.filter(proprietario=vitrine)
         return render(request, 'blog/vitrineHomeSeller.html', {'showcase_exist': showcase_exist,
         'vitrine': vitrine, 'produtos': produtos })
@@ -71,8 +77,7 @@ def vitrine_home_seller(request):
 @login_required
 def vitrine_management(request):
     user = request.user
-    vitrine = Vitrine.objects.filter(proprietario=user)
-    vitrine = get_object_or_404(Vitrine, proprietario=user)
+    vitrine = Vitrine.objects.get(proprietario=user)
     produtos = Produto.objects.filter(proprietario=vitrine)
     return render(request, 'blog/vitrineManagementHome.html', {'produtos': produtos })
 

@@ -10,9 +10,26 @@ class Vitrine(models.Model):
         ("Celulares", "Celulares"),
         ("Moda", "Moda")
     )
+
+    estado = (
+        ('AC', 'Acre'), ('AL', 'Alagoas'), ('AP', 'Amapá'),
+        ('AM', 'Amazonas'), ('BA', 'Bahia'), ('CE', 'Ceará'),
+        ('DF', 'Distrito Federal'), ('ES', 'Espírito Santo'),
+        ('GO', 'Goiás'), ('MA', 'Maranhão'), ('MT', 'Mato Grosso'),
+        ('MS', 'Mato Grosso do Sul'), ('MG', 'Minas Gerais'),
+        ('PA', 'Pará'), ('PB', 'Paraíba'),
+        ('PR', 'Paraná'), ('PE', 'Pernambuco'),
+        ('PI', 'Piauí'), ('RJ', 'Rio de Janeiro'),
+        ('RN', 'Rio Grande do Norte'), ('RS', 'Rio grande do Sul'),
+        ('RO', 'Rondônia'), ('RR', 'Roraima'),
+        ('SC', 'Santa Catarina'), ('SP', 'São Paulo'),
+        ('SE', 'Sergipe'), ('TO', 'Tocantis')
+    )
+
     proprietario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     nome = models.CharField(max_length=200)
     cidade = models.CharField(max_length=200)
+    estado = models.CharField(max_length=20, choices=estado, default='')
     categoria = models.CharField(max_length=20, choices=categoria)
     descricao = models.TextField(default='', blank=True)
 
@@ -34,3 +51,43 @@ class Produto(models.Model):
     valor = models.DecimalField(max_digits=7, decimal_places=2)
     quantidade = models.PositiveSmallIntegerField(default=0)
     data_criacao = models.DateField()
+
+    def __str__(self):
+        return self.nome
+
+class Perfil(models.Model):
+
+    estado = (
+        ('AC', 'Acre'), ('AL', 'Alagoas'), ('AP', 'Amapá'),
+        ('AM', 'Amazonas'), ('BA', 'Bahia'), ('CE', 'Ceará'),
+        ('DF', 'Distrito Federal'), ('ES', 'Espírito Santo'),
+        ('GO', 'Goiás'), ('MA', 'Maranhão'), ('MT', 'Mato Grosso'),
+        ('MS', 'Mato Grosso do Sul'), ('MG', 'Minas Gerais'),
+        ('PA', 'Pará'), ('PB', 'Paraíba'),
+        ('PR', 'Paraná'), ('PE', 'Pernambuco'),
+        ('PI', 'Piauí'), ('RJ', 'Rio de Janeiro'),
+        ('RN', 'Rio Grande do Norte'), ('RS', 'Rio grande do Sul'),
+        ('RO', 'Rondônia'), ('RR', 'Roraima'),
+        ('SC', 'Santa Catarina'), ('SP', 'São Paulo'),
+        ('SE', 'Sergipe'), ('TO', 'Tocantis')
+    )
+
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    cidade = models.CharField(max_length=200)
+    estado = models.CharField(max_length=20, choices=estado)
+
+class Encomenda(models.Model):
+
+    vendedor = models.ForeignKey('blog.Vitrine', on_delete=models.CASCADE)
+    cliente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    produto = models.ForeignKey('blog.Produto', on_delete=models.CASCADE)
+    quantidade = models.PositiveSmallIntegerField()
+    data_pedido = models.DateField()
+    data_entrega = models.DateField()
+    comentario_encomenda = models.ForeignKey('blog.Comentario', on_delete=models.CASCADE)
+
+class Comentario(models.Model):
+
+    cliente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    texto = models.TextField()
+    data_envio = models.DateField()

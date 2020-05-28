@@ -1,33 +1,118 @@
 {% extends 'blog/basePage.html' %}
+{% load static %}
+
 {% block content %}
-  <div class="container-fluid border">
+  <div class="container-fluid border" id="menu_page">
     <div class="row">
-      <div class="col-md-auto border">
+      <div class="col-md-auto">
         {% if user.is_authenticated %}
-        <div class="col-sm-auto border">
-          <button type="button" class="btn btn-info m-2 p-2 md-2">Meu perfil</button>
+        <div class="col-sm-auto">
+          <button type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom"
+          data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+            Meu perfil
+          </button>
           <a href="{% url 'vitrine_home_seller' %}" type="button" class="btn btn-info m-2 p-2 md-2">Modo Vitrine</a>
-          <button type="button" class="btn btn-info m-2 p-2 md-2">Minhas mensagens</button>
+          <button type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom"
+          data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+            Minhas mensagens
+          </button>
           <a type="button" class="btn btn-info m-2 p-2 md-2" href="{% url 'logout' %}">Sair</a>
         </div>
         {% else %}
-            <!-- <label for="userName" class="mr-md-2">Usuário:</label>
-            <input type="text" class="form-control mb-2 mr-sm-3" id="user_name" placeholder="nome de usúario"
-            name="user_name">
-            <label for="userPassword" class="mr-md-2">Senha:</label>
-            <input type="password" class="form-control mb-2 mr-sm-2" id="user_password" placeholder="senha"
-            name="user_password">
-            <div class="col-md-auto border">
-              <a href="#" role="button" class="btn btn-primary m-2 p-2 md-2">Confirmar</a>
-
-            </div> -->
-              <form method="post" action="{% url 'login' %}">
-                {% csrf_token %}
-                    <input type="submit" role="button" class="btn btn-info m-2 p-2 md-2 center" value="Fazer login" />
-                    <input type="hidden" name="next" value="{{ next }}" />
-                    <a href="{% url 'register' %}" role="button" class="btn btn-info m-2 p-2 md-2">Cadastrar</a>
-              </form>
-          {% endif %}
+          <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <input type="submit" role="button" class="btn btn-info m-2 p-2 md-2 center" value="Fazer login" />
+            <input type="hidden" name="next" value="{{ next }}" />
+            <a href="{% url 'register' %}" role="button" class="btn btn-info m-2 p-2 md-2">Cadastrar</a>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid m-2 border" id="menu_category">
+    <div class="row">
+      <div class="col-sm-auto">
+        <ul class="nav nav-pills">
+         <li class="nav-item m-2 md-2">
+           <a class="nav-link" href="#" data-toggle="popover" data-placement="bottom"
+           data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+              Informática
+            </a>
+         </li>
+         <li class="nav-item m-2 md-2">
+           <a class="nav-link" href="#" data-toggle="popover" data-placement="bottom"
+           data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+              Celulares
+            </a>
+         </li>
+         <li class="nav-item m-2 md-2">
+           <a class="nav-link" href="#" data-toggle="popover" data-placement="bottom"
+           data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+              Moda
+            </a>
+         </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3">
+    <div class="row">
+      <input type="text" class="col-md-7 m-2 ml-3 form-control" placeholder="O que você procura?">
+      <button type="submit" class="col-md-3 btn btn-info m-1" data-toggle="popover" data-placement="right" data-trigger="hover"
+      data-content="Essa função ainda não está funcionando D:">
+        Buscar
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid col-sm m-3">
+    <div class="row">
+      <div class="col-lg-2" id="menu_filter">
+        <div class="row">
+          <nav class="col-sm-12 mt-2 nav flex-column text-center">
+            <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
+            data-content="Essa função ainda não está funcionando D:">
+              Maior relevância
+            </a>
+            <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
+            data-content="Essa função ainda não está funcionando D:">
+              Menor preço
+            </a>
+            <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
+            data-content="Essa função ainda não está funcionando D:">
+              Maior preço
+            </a>
+            <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
+            data-content="Essa função ainda não está funcionando D:">
+              Mais encomendados
+            </a>
+          </nav>
+        </div>
+      </div>
+      <script>
+        $(document).ready(function(){
+          $('[data-toggle="popover"]').popover();
+        });
+      </script>
+      <div class="col-sm-auto mr-auto border">
+        <h3 class="col-sm m-2 border font-weight-light">Vitrines</h3>
+        <br>
+        <div class="post">
+          <div class="row">
+            {% for vitrine in vitrines %}
+            <div class="card m-2 m ml-3" style="width:200px;">
+              <img class="card-img-top" src="{% static "media/vitrine.png" %}"
+              alt="Imagem padrão para todas as vetrines que contém uma lojinha cinza desenhada com detalhes em azul, marrom e laranja">
+              <div class="card-body">
+                <h4 class="card-title">{{ vitrine.nome }}</h4>
+                <p class="card-text">{{ vitrine.descricao }}</p>
+                <a href="{% url 'vitrine_home_client' pk=vitrine.pk %}" class="btn btn-primary">Entrar</a>
+              </div>
+            </div>
+            {% empty %}
+            <h2 class="m-2 font-weight-light">O site não possui nenhuma vitrine</h2>
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </div>
   </div>
