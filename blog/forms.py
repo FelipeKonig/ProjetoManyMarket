@@ -15,7 +15,7 @@ class PerfilForm(forms.ModelForm):
 
     class Meta:
         model = Perfil
-        fields = ('cidade', 'estado')
+        fields = ('cidade', 'estado', 'bairro', 'rua', 'numero', 'cep', 'ponto_referencia')
 
 class VitrineForm(forms.ModelForm):
 

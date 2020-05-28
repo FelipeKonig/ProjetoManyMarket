@@ -38,7 +38,7 @@ def produto_register(request):
             form = ProdutoForm(request.POST)
             if form.is_valid():
                 produto = form.save(commit=False)
-                vitrine = Vitrine.objects.filter(proprietario=user)
+                vitrine = Vitrine.objects.get(proprietario=request.user)
                 produto.proprietario = vitrine
                 produto.save()
                 return redirect('vitrine_home_seller')
@@ -53,7 +53,7 @@ def perfil_register(request):
             perfil = form.save(commit=False)
             perfil.usuario = request.user
             perfil.save()
-            return redirect('home')
+            return redirect('cliente_perfil')
     else:
         form = PerfilForm()
     return render(request, "blog/perfilRegister.html", {"form":form})
@@ -64,6 +64,15 @@ def home_page(request):
     if request.user.is_authenticated:
         needSearchCity = False
     return render(request, 'blog/home.html', {'needSearchCity': needSearchCity, 'vitrines': vitrines})
+
+@login_required
+def perfil_cliente(request):
+    perfil = Perfil.objects.filter(usuario=request.user)
+    if not perfil:
+        return render(request, 'blog/perfilCliente.html')
+    else:
+        perfil = Perfil.objects.get(usuario=request.user)
+        return render(request, 'blog/perfilCliente.html', {'perfil': perfil})
 
 def vitrine_home_client(request, pk):
     vitrine = get_object_or_404(Vitrine, pk=pk)

@@ -73,8 +73,13 @@ class Perfil(models.Model):
     )
 
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    cidade = models.CharField(max_length=200)
+    cidade = models.CharField(max_length=100)
     estado = models.CharField(max_length=20, choices=estado)
+    bairro = models.CharField(max_length=200, default='')
+    rua = models.CharField(max_length=200, default='')
+    cep = models.PositiveIntegerField(default=0)
+    numero = models.PositiveIntegerField(default=0)
+    ponto_referencia = models.TextField(default='')
 
 class Encomenda(models.Model):
 

@@ -7,10 +7,7 @@
         <div class="col-md-auto border">
           {% if user.is_authenticated %}
           <div class="col-sm-auto border">
-            <button type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom"
-            data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
-              Meu perfil
-            </button>
+            <a href="{% url 'cliente_perfil' %}"type="button" class="btn btn-info m-2 p-2 md-2">Meu perfil</a>
             <a href="{% url 'vitrine_home_seller' %}" type="button" class="btn btn-info m-2 p-2 md-2">Modo Vitrine</a>
             <button type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom"
             data-trigger="hover" data-content="Essa função ainda não está funcionando D:">

@@ -1,0 +1,76 @@
+{% extends "blog/basePage.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="container-fluid border" id="menu_page">
+    <div class="row">
+      <div class="col-md-auto">
+        {% if user.is_authenticated %}
+        <div class="col-sm-auto">
+          <a href="{% url 'cliente_perfil' %}"type="button" class="btn btn-info m-2 p-2 md-2">Meu perfil</a>
+          <a href="{% url 'vitrine_home_seller' %}" type="button" class="btn btn-info m-2 p-2 md-2">Modo Vitrine</a>
+          <button type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom"
+          data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+            Minhas mensagens
+          </button>
+          <a type="button" class="btn btn-info m-2 p-2 md-2" href="{% url 'logout' %}">Sair</a>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="container-fluid col-sm border">
+    <div class="row">
+      <div class="col-sm-3 m-2 border">
+        <img src="{% static "media/user.png" %}" class="img-thumbnail mt-0" style="width:100%;"
+         alt="Imagem padrão para todos os usuários, contém fundo branco, duas mulheres, dois homens no centro">
+         <button type="button" class="btn btn-block btn-info m-2 p-2" data-toggle="popover" data-placement="right"
+         data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+            Alterar minha foto
+         </button>
+      </div>
+      <script>
+        $(document).ready(function(){
+          $('[data-toggle="popover"]').popover();
+        });
+      </script>
+      <div class="col-sm-8 m-2 border" id="profile_information">
+        <h3 class="col-sm m-2 border font-weight-light">Seu perfil</h3>
+        <br>
+        <h5 class="col-sm-auto m-2 mb-4 border font-weight-light">
+          Nome: {{ request.user.first_name }} {{ request.user.last_name }}
+        </h5>
+        <h5 class="col-sm-auto m-2 mb-4 border font-weight-light">
+          E-mail: {{ request.user.email }}
+        </h5>
+        {% if perfil %}
+          <h5 class="col-sm-auto m-2 mb-4 border font-weight-light">
+            Cidade: {{ perfil.cidade }} - {{ perfil.estado }}
+          </h5>
+          <h5 class="col-sm-auto m-2 mb-4 border font-weight-light">
+            Endereço: {{ perfil.bairro }}, {{ perfil.rua }} - {{ perfil.numero }}, cep: {{ perfil.cep }}
+          </h5>
+          <h5 class="col-sm-auto m-2 mb-4 border font-weight-light">
+            Ponto de referência: {{ perfil.ponto_referencia }}
+          </h5>
+          <button type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="right"
+          data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+            Atualizar perfil
+          </button>
+        {% else %}
+          <h5 class="col-sm-auto m-2 mb-4 border font-weight-light">
+            Você ainda não colocou seu endereço D:
+          </h5>
+          <a href="{% url 'register_perfil' %}" type="button" class="btn btn-info m-2 p-2 md-2">
+            Clique aqui para adicionar seu endereço
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid col-sm border">
+    <h5 class="col-sm-auto m-2 mb-4 border font-weight-light">
+      Minhas encomendas
+    </h5>
+  </div>
+{% endblock %}
