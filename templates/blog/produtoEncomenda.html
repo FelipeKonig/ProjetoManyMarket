@@ -42,9 +42,21 @@
           {% csrf_token %}
           {{ form|bootstrap }}
           <br>
-          <button type="submit" class="btn btn-info">Concluir encomenda</button>
+          {% if profile_exist %}
+            <button type="submit" class="btn btn-info">Concluir encomenda</button>
+          {% else %}
+            <button type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom"
+            data-trigger="hover" data-content="Você precisa cadastrar seu endereço em seu perfil antes de realizar uma encomenda">
+              Concluir encomenda
+            </button>
+          {% endif %}
         </form>
       </div>
+      <script>
+        $(document).ready(function(){
+          $('[data-toggle="popover"]').popover();
+        });
+      </script>
     </div>
   </div>
 {% endblock %}

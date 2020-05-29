@@ -61,6 +61,12 @@ def perfil_register(request):
 
 @login_required
 def encomendar_produto(request, pk_vitrine, pk_produto):
+
+    profile_exist = False
+    perfil = Perfil.objects.filter(usuario=request.user)
+    if perfil:
+        profile_exist = True
+    print(profile_exist)
     vitrine = get_object_or_404(Vitrine, pk = pk_vitrine)
     produto = get_object_or_404(Produto, pk = pk_produto)
     if request.method == "POST":
@@ -75,7 +81,9 @@ def encomendar_produto(request, pk_vitrine, pk_produto):
             return redirect('cliente_perfil')
     else:
         form = EncomendaForm()
-    return render(request, 'blog/produtoEncomenda.html', {"form":form, 'vitrine': vitrine, 'produto': produto})
+    return render(request, 'blog/produtoEncomenda.html', {
+        "form":form, 'vitrine': vitrine, 'produto': produto, 'profile_exist': profile_exist
+    })
 
 def home_page(request):
     needSearchCity = True
@@ -90,7 +98,8 @@ def perfil_cliente(request):
     if perfil:
         perfil = Perfil.objects.get(usuario=request.user)
         encomendas = Encomenda.objects.filter(cliente=request.user)
-    return render(request, 'blog/perfilCliente.html', {'perfil': perfil, 'encomendas': encomendas})
+        return render(request, 'blog/perfilCliente.html', {'perfil': perfil, 'encomendas': encomendas})
+    return render(request, 'blog/perfilCliente.html', {'perfil': perfil})
 
 def vitrine_home_client(request, pk):
     user_on = False
