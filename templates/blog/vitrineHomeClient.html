@@ -37,7 +37,7 @@
     </div>
     <div class="container-fluid col-sm m-3">
       <div class="row">
-        <div class="col-lg-2 border">
+        <div class="col-lg-2">
           <div class="row">
             <nav class="col-sm-12 mt-2 nav flex-column text-center">
               <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
@@ -70,12 +70,28 @@
               <div class="card-body">
                 <h4 class="card-title">{{ produto.nome }}</h4>
                 <p class="card-text">R$ {{ produto.valor }}</p>
-                <a href="#" class="btn btn-primary" data-toggle="popover" data-placement="bottom" data-trigger="hover"
-                data-content="Essa função ainda não está funcionando D:">encomendar</a>
+                {% if request.user == vitrine.proprietario %}
+                <button class="btn btn-primary" data-toggle="popover" data-placement="bottom" data-trigger="hover"
+                data-content="Por que você encomendaria seu próprio produto?">
+                  encomendar
+                </button>
+                {% else %}
+                  {% if user_on %}
+                    <a href="{% url 'produto_encomenda' pk_vitrine=vitrine.pk pk_produto=produto.pk %}"
+                    class="btn btn-primary">
+                      encomendar
+                    </a>
+                  {% else %}
+                  <button class="btn btn-primary" data-toggle="popover" data-placement="bottom" data-trigger="hover"
+                  data-content="É necessário estar em uma conta para realizar uma encomenda">
+                    encomendar
+                  </button>
+                {% endif %}
+              {% endif %}
               </div>
             </div>
             {% empty %}
-            <h2 class="m-2 font-weight-light">Essa vitrine não possui nenhum produto</h2>
+              <h2 class="m-2 font-weight-light">Essa vitrine não possui nenhum produto</h2>
             {% endfor %}
           </div>
         </div>

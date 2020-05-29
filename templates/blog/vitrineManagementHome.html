@@ -44,9 +44,9 @@
         <div class="col-md-10 border">
           <div class="row">
             <div class="col-sm-12 border">
-              <h3 class="col-sm m-2 border font-weight-light">Produtos adicionados recentemente</h3>
+              <h2 class="col-sm m-2 border font-weight-light">Produtos adicionados recentemente</h2>
               <br>
-              <div class="row">
+              <div class="row ml-2">
                 {% for produto in produtos %}
                 <div class="card m-2" style="width:200px">
                   <img class="card-img-top" src="{% static "media/produto.jpeg" %}"
@@ -54,13 +54,35 @@
                   <div class="card-body">
                     <h4 class="card-title">{{ produto.nome }}</h4>
                     <p class="card-text">R$ {{ produto.valor }}.</p>
-                    <a href="#" class="btn btn-primary data-toggle="popover" data-placement="right" data-trigger="hover"
-                    data-content="Essa função ainda não está funcionando D:"">Atualizar</a>
+                    <a href="#" class="btn btn-primary" data-toggle="popover" data-placement="right" data-trigger="hover"
+                    data-content="Essa função ainda não está funcionando D:">Atualizar</a>
                   </div>
                 </div>
                 {% empty %}
                 <h2 class="m-2 font-weight-light">Sua vitrine não possui nenhum produto</h2>
                 {% endfor %}
+              </div>
+              <div class="col-sm mt-5 border">
+                <h2 class="col-sm m-2 border font-weight-light">Últimas encomendas</h2>
+                <div class="row ml-2">
+                  {% for encomenda in encomendas %}
+                  <div class="card m-2" style="width:200px;">
+                    <img class="card-img-top" src="{% static "media/produto.jpeg" %}"
+                    alt="Imagem padrão para os produtos, contém vários objetos desenhados como roupa, bolsa, camera, celular e afins">
+                    <div class="card-body">
+                      <h4 class="card-title">{{ encomenda.produto.nome }}</h4>
+                      <p class="card-text">R$ {{ encomenda.produto.valor }}</p>
+                      <p class="card-text">Quantidade: {{ encomenda.produto.quantidade }}</p>
+                      <p class="card-text">Cliente: {{ encomenda.cliente }}</p>
+                      <p class="card-text">{{ encomenda.data_entrega }}</p>
+                      <a href="#" class="btn btn-primary" data-toggle="popover" data-placement="bottom" data-trigger="hover"
+                      data-content="Essa função ainda não está funcionando D:">Ver detalhes</a>
+                    </div>
+                  </div>
+                  {% empty %}
+                  <h2 class="m-2 font-weight-light">Sua vitrine não possui nenhuma encomenda</h2>
+                  {% endfor %}
+                </div>
               </div>
             </div>
             <script>
@@ -68,9 +90,7 @@
                 $('[data-toggle="popover"]').popover();
               });
             </script>
-            <div class="col-sm-12 mt-5 border">
-              <h5 class="col-sm m-2 border font-weight-light">Últimas encomendas</h5>
-            </div>
+
           </div>
         </div>
       </div>

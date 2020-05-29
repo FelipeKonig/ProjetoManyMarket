@@ -2,9 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
-from .forms import RegisterForm, VitrineForm, ProdutoForm, PerfilForm
-from .models import Vitrine, Produto, Perfil, Encomenda, Comentario
+from .forms import RegisterForm, VitrineForm, ProdutoForm, PerfilForm, EncomendaForm
+from .models import Vitrine, Produto, Perfil, Encomenda
 
 # Create your views here.
 def register(request):
@@ -58,6 +59,24 @@ def perfil_register(request):
         form = PerfilForm()
     return render(request, "blog/perfilRegister.html", {"form":form})
 
+@login_required
+def encomendar_produto(request, pk_vitrine, pk_produto):
+    vitrine = get_object_or_404(Vitrine, pk = pk_vitrine)
+    produto = get_object_or_404(Produto, pk = pk_produto)
+    if request.method == "POST":
+        form = EncomendaForm(request.POST)
+        if form.is_valid():
+            encomenda = form.save(commit=False)
+            encomenda.vendedor = vitrine
+            encomenda.cliente = request.user
+            encomenda.produto = produto
+            encomenda.data_pedido = timezone.now()
+            encomenda.save()
+            return redirect('cliente_perfil')
+    else:
+        form = EncomendaForm()
+    return render(request, 'blog/produtoEncomenda.html', {"form":form, 'vitrine': vitrine, 'produto': produto})
+
 def home_page(request):
     needSearchCity = True
     vitrines = Vitrine.objects.filter()
@@ -68,16 +87,18 @@ def home_page(request):
 @login_required
 def perfil_cliente(request):
     perfil = Perfil.objects.filter(usuario=request.user)
-    if not perfil:
-        return render(request, 'blog/perfilCliente.html')
-    else:
+    if perfil:
         perfil = Perfil.objects.get(usuario=request.user)
-        return render(request, 'blog/perfilCliente.html', {'perfil': perfil})
+        encomendas = Encomenda.objects.filter(cliente=request.user)
+    return render(request, 'blog/perfilCliente.html', {'perfil': perfil, 'encomendas': encomendas})
 
 def vitrine_home_client(request, pk):
+    user_on = False
     vitrine = get_object_or_404(Vitrine, pk=pk)
     produtos = Produto.objects.filter(proprietario=vitrine)
-    return render(request, 'blog/vitrineHomeClient.html', {'vitrine': vitrine, 'produtos': produtos})
+    if request.user.is_authenticated:
+        user_on = True
+    return render(request, 'blog/vitrineHomeClient.html', {'vitrine': vitrine, 'produtos': produtos, 'user_on': user_on})
 
 @login_required
 def vitrine_home_seller(request):
@@ -95,15 +116,7 @@ def vitrine_home_seller(request):
 
 @login_required
 def vitrine_management(request):
-    user = request.user
-    vitrine = Vitrine.objects.get(proprietario=user)
+    vitrine = Vitrine.objects.get(proprietario=request.user)
     produtos = Produto.objects.filter(proprietario=vitrine)
-    return render(request, 'blog/vitrineManagementHome.html', {'produtos': produtos })
-
-# def register_user(request):
-#     form = UserForm(request.POST)
-#     register = False
-#     if form.is_valid():
-#         user = form.save()
-#         register = True
-#     return render(request, 'blog/register.html', {'form': form, 'register': register, 'needSearchCity': False})
+    encomendas = Encomenda.objects.filter(vendedor=vitrine)
+    return render(request, 'blog/vitrineManagementHome.html', {'produtos': produtos, 'encomendas': encomendas })

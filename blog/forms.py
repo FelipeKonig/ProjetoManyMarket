@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Vitrine, Produto, Perfil, Encomenda, Comentario
+from .models import Vitrine, Produto, Perfil, Encomenda
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -29,3 +29,9 @@ class ProdutoForm(forms.ModelForm):
     class  Meta:
         model = Produto
         fields = ('nome', 'categoria', 'valor','quantidade','data_criacao','descricao')
+
+class EncomendaForm(forms.ModelForm):
+
+    class Meta:
+        model = Encomenda
+        fields = ('quantidade', 'data_entrega', 'comentario')

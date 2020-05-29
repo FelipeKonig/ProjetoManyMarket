@@ -89,10 +89,4 @@ class Encomenda(models.Model):
     quantidade = models.PositiveSmallIntegerField()
     data_pedido = models.DateField()
     data_entrega = models.DateField()
-    comentario_encomenda = models.ForeignKey('blog.Comentario', on_delete=models.CASCADE)
-
-class Comentario(models.Model):
-
-    cliente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    texto = models.TextField()
-    data_envio = models.DateField()
+    comentario = models.TextField(default='')

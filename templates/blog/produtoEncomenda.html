@@ -1,0 +1,50 @@
+{% extends 'blog/basePage.html' %}
+{% load static %}
+{% load bootstrap %}
+
+{% block content %}
+  <div class="container-fluid col-md-12 m-2" id="menu_page">
+    <div class="row">
+      <div class="col-md-auto border">
+        {% if user.is_authenticated %}
+        <div class="col-sm-auto border">
+          <a href="{% url 'cliente_perfil' %}"type="button" class="btn btn-info m-2 p-2 md-2">Meu perfil</a>
+          <a href="{% url 'vitrine_home_seller' %}" type="button" class="btn btn-info m-2 p-2 md-2">Modo Vitrine</a>
+          <button type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom"
+          data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+            Minhas mensagens
+          </button>
+          <a type="button" class="btn btn-info m-2 p-2 md-2" href="{% url 'logout' %}">Sair</a>
+        </div>
+        {% else %}
+          <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <input type="submit" role="button" class="btn btn-info m-2 p-2 md-2 center" value="Fazer login" />
+            <input type="hidden" name="next" value="{{ next }}" />
+            <a href="{% url 'register' %}" role="button" class="btn btn-info m-2 p-2 md-2">Cadastrar</a>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid col-md">
+    <div class="row">
+      <div class="col-md-4 border">
+        <img src="{% static "media/produto.jpeg" %}" class="img-thumbnail m-2" style="width:100%;"
+         alt="Imagem padrão para todas as vetrines, contém uma lojinha cinza desenhada com detalhes em azul, marrom e laranja">
+         <h2 class="font-weight-light m-2 mt-3 ml-3"> {{ produto.nome }} </h2>
+         <h3 class="font-weight-light m-2 mt-5 ml-3"> {{ produto.descricao }} </h3>
+         <h3 class="font-weight-light m-2 mt-5 ml-3"> Quantidade: {{ produto.quantidade }} </h3>
+      </div>
+      <div class="col-md-6 ml-2 border">
+        <h2 class="font-weight-light m-2">Encomenda</h2>
+        <form method="POST" class="post-form">
+          {% csrf_token %}
+          {{ form|bootstrap }}
+          <br>
+          <button type="submit" class="btn btn-info">Concluir encomenda</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
