@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
     'bootstrapform',
-    # 'users.apps.UsersConfig'
+    'blog.apps.BlogConfig',
+    'blogtutorial.apps.BlogtutorialConfig'
 ]
 
 # AUTH_USER_MODEL = 'users.CustomUser'
