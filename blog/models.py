@@ -90,3 +90,6 @@ class Encomenda(models.Model):
     data_pedido = models.DateField()
     data_entrega = models.DateField()
     comentario = models.TextField(default='')
+
+    def __str__(self):
+        return self.nome
