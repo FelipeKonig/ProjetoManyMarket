@@ -2,3 +2,4 @@ Django
 asgiref
 pytz
 sqlparse
+mysqlclient
