@@ -6,16 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <style type="text/css">
+      html {
+        overflow-x:hidden;
+      }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   </head>
   <body>
     <header>
-      <div class="container-fluid p-4 m-2 border" id="base_header">
+      <div class="container-fluid p-4" id="base_header">
         <div class="row">
           <div class="col-lg-8">
-            <a href="{% url 'home' %}" class="display-3" id="title_base">Vitrine Virtual</a>
+            <a href="{% url 'home' %}" class="display-3" id="title_base">ManyMarket</a>
           </div>
           {% if needSearchCity %}
             <div class="col-md-4">
@@ -47,7 +52,7 @@
     <br>
     <br>
     <footer>
-      <div class="container-fluid border">
+      <div class="container-fluid">
         <div class="row">
           <div class="col-sm m-3">
             <a href="#">Quem nós somos</a>

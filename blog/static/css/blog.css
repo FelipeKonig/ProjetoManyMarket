@@ -1,9 +1,9 @@
 header, footer{
-    background-color: #dbd6c3;
+    background-color: #effa5c;
 }
 
 body{
-  background-color:#f2eacb;
+  background-color:#f4f5e4;
 }
 
 #title_base, title_showcase{
@@ -13,7 +13,7 @@ body{
 }
 
 #menu_category, #profile_information{
-  background-color: #edddc7;
+  background-color: #f0fa75;
 }
 
 #menu_filter{
@@ -23,7 +23,7 @@ body{
 }
 
 #menu_page{
-  background-color: #e3dacf;
+  background-color: #ecf75c;
 }
 
 .col-lg-2, .col-lg-3{
