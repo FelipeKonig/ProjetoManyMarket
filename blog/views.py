@@ -45,7 +45,8 @@ def produto_register(request):
                 return redirect('vitrine_home_seller')
         else:
             form = ProdutoForm()
-        return render(request, 'blog/produtoRegister.html', {'form': form})
+        showcase_exist = True
+        return render(request, 'blog/produtoRegister.html', {'form': form, 'showcase_exist': showcase_exist})
 
 def perfil_register(request):
     if request.method == "POST":
@@ -111,11 +112,10 @@ def vitrine_home_client(request, pk):
 
 @login_required
 def vitrine_home_seller(request):
-    showcase_exist = False
     user = request.user
     vitrine = Vitrine.objects.filter(proprietario=user)
     if not vitrine:
-        return render(request, 'blog/vitrineHomeSeller.html', {'showcase_exist': showcase_exist})
+        return render(request, 'blog/vitrineHomeSeller.html')
     else:
         showcase_exist = True
         vitrine = Vitrine.objects.get(proprietario=user)
@@ -125,7 +125,9 @@ def vitrine_home_seller(request):
 
 @login_required
 def vitrine_management(request):
+    showcase_exist = True
     vitrine = Vitrine.objects.get(proprietario=request.user)
     produtos = Produto.objects.filter(proprietario=vitrine)
     encomendas = Encomenda.objects.filter(vendedor=vitrine)
-    return render(request, 'blog/vitrineManagementHome.html', {'produtos': produtos, 'encomendas': encomendas })
+    return render(request, 'blog/vitrineManagementHome.html', {'produtos': produtos, 'encomendas': encomendas,
+     'showcase_exist': showcase_exist })
