@@ -2,30 +2,6 @@
 {% load static %}
 
 {% block content %}
-    <div class="container-fluid col-md-12 m-2" id="menu_page">
-      <div class="row">
-        <div class="col-md-auto border">
-          {% if user.is_authenticated %}
-          <div class="col-sm-auto border">
-            <a href="{% url 'cliente_perfil' %}"type="button" class="btn btn-info m-2 p-2 md-2">Meu perfil</a>
-            <a href="{% url 'vitrine_home_seller' %}" type="button" class="btn btn-info m-2 p-2 md-2">Modo Vitrine</a>
-            <button type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="bottom"
-            data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
-              Minhas mensagens
-            </button>
-            <a type="button" class="btn btn-info m-2 p-2 md-2" href="{% url 'logout' %}">Sair</a>
-          </div>
-          {% else %}
-            <form method="post" action="{% url 'login' %}">
-              {% csrf_token %}
-              <input type="submit" role="button" class="btn btn-info m-2 p-2 md-2 center" value="Fazer login" />
-              <input type="hidden" name="next" value="{{ next }}" />
-              <a href="{% url 'register' %}" role="button" class="btn btn-info m-2 p-2 md-2">Cadastrar</a>
-            </form>
-          {% endif %}
-        </div>
-      </div>
-    </div>
     <div class="col-lg-3 border">
       <div class="row">
         <input type="text" class="col-md-7 m-2 ml-3 form-control" placeholder="O que você procura?">

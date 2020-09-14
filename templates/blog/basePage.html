@@ -39,6 +39,9 @@
         </div>
       </div>
     </header>
+    {% block menu_user %}
+      {% include 'blog/menuUser.html' %}
+    {% endblock %}
     {% block content%}
     {% endblock %}
     <br>
