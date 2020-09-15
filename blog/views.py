@@ -4,8 +4,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
+import logging
+
 from .forms import RegisterForm, VitrineForm, ProdutoForm, PerfilForm, EncomendaForm
 from .models import Vitrine, Produto, Perfil, Encomenda
+
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 def register(request):

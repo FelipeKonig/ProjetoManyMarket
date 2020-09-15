@@ -16,6 +16,58 @@ from .local_settings import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '{name}({levelname}) {message}',
+            'style': '{',
+        },
+        'file': {
+            'format': '{asctime}-{name}-({levelname}) {message}',
+            'style': '{',
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+            'filters': ['require_debug_true'],
+        },
+        'debug': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'file',
+            'filename': os.path.join(BASE_DIR, 'blog/logs/debugs.log'),
+            'filters': ['require_debug_true'],
+        },
+        'errors': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'formatter': 'file',
+            'filename': os.path.join(BASE_DIR, 'blog/logs/errors.log'),
+            'filters': ['require_debug_true'],
+        },
+    },
+    'loggers':{
+        '': {
+            'handlers': ['debug','console'],
+            'level': 'DEBUG',
+        },
+        'blog': {
+            'handlers': ['errors', 'debug'],
+            'level': 'DEBUG',
+        },
+    }
+}
+
 LOGIN_REDIRECT_URL = 'home'
 
 # Quick-start development settings - unsuitable for production
