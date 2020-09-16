@@ -17,23 +17,23 @@
           $('[data-toggle="popover"]').popover();
         });
       </script>
-      <div class="col-sm-8 m-2 border" id="profile_information">
-        <h3 class="col-sm m-2 border font-weight-light">Seu perfil</h3>
+      <div class="col-sm-8 m-2" id="profile_information">
+        <h3 class="col-sm m-2 font-weight-light">Seu perfil</h3>
         <br>
-        <h5 class="col-sm-auto m-2 mb-4 border font-weight-light">
+        <h5 class="col-sm-auto m-2 mb-4 font-weight-light">
           Nome: {{ request.user.first_name }} {{ request.user.last_name }}
         </h5>
-        <h5 class="col-sm-auto m-2 mb-4 border font-weight-light">
+        <h5 class="col-sm-auto m-2 mb-4 font-weight-light">
           E-mail: {{ request.user.email }}
         </h5>
         {% if perfil %}
-          <h5 class="col-sm-auto m-2 mb-4 border font-weight-light">
+          <h5 class="col-sm-auto m-2 mb-4 font-weight-light">
             Cidade: {{ perfil.cidade }} - {{ perfil.estado }}
           </h5>
-          <h5 class="col-sm-auto m-2 mb-4 border font-weight-light">
+          <h5 class="col-sm-auto m-2 mb-4 font-weight-light">
             Endereço: {{ perfil.bairro }}, {{ perfil.rua }} - {{ perfil.numero }}, cep: {{ perfil.cep }}
           </h5>
-          <h5 class="col-sm-auto m-2 mb-4 border font-weight-light">
+          <h5 class="col-sm-auto m-2 mb-4 font-weight-light">
             Ponto de referência: {{ perfil.ponto_referencia }}
           </h5>
           <button type="button" class="btn btn-info m-2 p-2 md-2" data-toggle="popover" data-placement="right"
@@ -41,7 +41,7 @@
             Atualizar perfil
           </button>
         {% else %}
-          <h5 class="col-sm-auto m-2 mb-4 border font-weight-light">
+          <h5 class="col-sm-auto m-2 mb-4 font-weight-light">
             Você ainda não colocou seu endereço D:
           </h5>
           <a href="{% url 'register_perfil' %}" type="button" class="btn btn-info m-2 p-2 md-2">
@@ -51,8 +51,8 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid col-sm border">
-    <div class="col-sm-auto m-2 mb-4 border">
+  <div class="container-fluid col-sm ">
+    <div class="col-sm-auto m-2 mb-4 ">
       <h2 class="font-weight-light">
         Minhas encomendas
       </h2>

@@ -1,16 +1,10 @@
 {% extends "blog/basePage.html" %}
-{% load bootstrap %}
+{% load crispy_forms_tags %}
 
 {% block content %}
   <div class="container">
     <p class="display-4">Cadastro do seu perfil</p>
-    <form method="POST" class="post-form">
-      {% csrf_token %}
-      {{ form|bootstrap }}
-      <br>
-      <button type="submit" class="btn btn-info">Cadastrar</button>
-      <a href="{% url 'home' %}" role="button" class="btn btn-info">Voltar para a Home</a>
-    </form>
+    {% crispy form %}
   </div>
   <br>
   <br>

@@ -87,8 +87,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrapform',
     'blog.apps.BlogConfig',
-    'blogtutorial.apps.BlogtutorialConfig'
+    'blogtutorial.apps.BlogtutorialConfig',
+    'crispy_forms',
 ]
+
+# CRISPY
+CRISPY_TEMPLATE_PACK = 'bootstrap4' 
 
 # AUTH_USER_MODEL = 'users.CustomUser'
 
