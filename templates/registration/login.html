@@ -15,11 +15,18 @@
             {{ form.password }}
           </div>
           <div class="col-sm m-3">
+            <a href="{% url 'password_reset' %}">
+              Esqueceu sua senha? Recupere aqui
+            </a>
+          </div>
+          <div class="col-sm m-3">
             <input type="submit" value="Logar" role="button" class="btn btn-info"/>
             <input type="hidden" name="next" value="{{ next }}" />
           </div>
         </div>
       </div>
     </div>
+    <br>
   </form>
+
 {% endblock %}
