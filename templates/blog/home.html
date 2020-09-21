@@ -7,20 +7,17 @@
       <div class="col-sm-auto">
         <ul class="nav nav-pills">
          <li class="nav-item m-2 md-2">
-           <a class="nav-link" href="#" data-toggle="popover" data-placement="bottom"
-           data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+           <a class="nav-link" href="{% url 'home_category' category='Informática' %}">
               Informática
             </a>
          </li>
          <li class="nav-item m-2 md-2">
-           <a class="nav-link" href="#" data-toggle="popover" data-placement="bottom"
-           data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+           <a class="nav-link" href="{% url 'home_category' category='Celulares' %}">
               Celulares
             </a>
          </li>
          <li class="nav-item m-2 md-2">
-           <a class="nav-link" href="#" data-toggle="popover" data-placement="bottom"
-           data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
+           <a class="nav-link" href="{% url 'home_category' category='Moda' %}">
               Moda
             </a>
          </li>
@@ -28,13 +25,14 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-3">
+  <div class="col-lg-auto">
     <div class="row">
-      <input type="text" class="col-md-7 m-2 ml-3 form-control" placeholder="O que você procura?">
-      <button type="submit" class="col-md-3 btn btn-info m-1" data-toggle="popover" data-placement="right" data-trigger="hover"
-      data-content="Essa função ainda não está funcionando D:">
-        Buscar
-      </button>
+      <form class="col-md-12" method="get">
+        <input type="text" name="name_store" class="col-md-4 m-1" placeholder="Qual loja você procura?">
+        <button type="submit" class="col-md-2 btn btn-info btn-md ">
+          Buscar
+        </button>
+      </form>
     </div>
   </div>
   <div class="container-fluid col-sm m-3">
@@ -44,19 +42,19 @@
           <nav class="col-sm-12 mt-2 nav flex-column text-center">
             <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
             data-content="Essa função ainda não está funcionando D:">
-              Maior relevância
+              Mais bem avaliadas
             </a>
             <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
             data-content="Essa função ainda não está funcionando D:">
-              Menor preço
+              Mais visitadas
             </a>
             <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
             data-content="Essa função ainda não está funcionando D:">
-              Maior preço
+              Com mais produtos
             </a>
             <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
             data-content="Essa função ainda não está funcionando D:">
-              Mais encomendados
+              Mais procuradas
             </a>
           </nav>
         </div>
@@ -67,7 +65,7 @@
         });
       </script>
       <div class="col-sm-auto mr-auto ">
-        <h3 class="col-sm m-2 border font-weight-light">Vitrines</h3>
+        <h3 class="col-sm m-2 font-weight-light">Vitrines</h3>
         <br>
         <div class="post">
           <div class="row">

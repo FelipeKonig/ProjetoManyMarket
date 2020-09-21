@@ -1,0 +1,12 @@
+2020-09-21 16:17:08,486-django.request-(WARNING) Not Found: /favicon.ico
+2020-09-21 16:17:15,733-django.request-(WARNING) Not Found: /favicon.ico
+2020-09-21 16:17:29,424-django.request-(WARNING) Not Found: /favicon.ico
+2020-09-21 16:18:19,526-django.request-(WARNING) Not Found: /favicon.ico
+2020-09-21 16:24:24,830-django.utils.autoreload-(INFO) /home/felipe/Documents/Web/DjangoProjeto/blog/views.py changed, reloading.
+2020-09-21 16:24:25,461-asyncio-(DEBUG) Using selector: EpollSelector
+2020-09-21 16:24:25,652-django.utils.autoreload-(INFO) Watching for file changes with StatReloader
+2020-09-21 16:24:50,258-django.request-(WARNING) Not Found: /favicon.ico
+2020-09-21 16:27:05,115-django.utils.autoreload-(INFO) /home/felipe/Documents/Web/DjangoProjeto/blog/views.py changed, reloading.
+2020-09-21 16:27:06,030-asyncio-(DEBUG) Using selector: EpollSelector
+2020-09-21 16:27:06,263-django.utils.autoreload-(INFO) Watching for file changes with StatReloader
+2020-09-21 16:31:10,147-django.request-(WARNING) Not Found: /favicon.ico

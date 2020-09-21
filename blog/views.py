@@ -3,6 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.http import JsonResponse
+from django.core import serializers
+from django.template.loader import render_to_string
 
 import logging
 
@@ -90,20 +93,39 @@ def encomendar_produto(request, pk_vitrine, pk_produto):
         "form":form, 'vitrine': vitrine, 'produto': produto, 'profile_exist': profile_exist
     })
 
-def home_page(request):
+def home_category(request,category):
     needSearchCity = True
-    vitrines = Vitrine.objects.filter()
+    vitrines = Vitrine.objects.filter(categoria = category)
+    logger.info('categoria de vitrines selecionada:', vitrines)
     if request.user.is_authenticated:
         needSearchCity = False
-    return render(request, 'blog/home.html', {'needSearchCity': needSearchCity, 'vitrines': vitrines})
+    return render(request, 'blog/home.html', {'needSearchCity': needSearchCity,'vitrines': vitrines})
+
+def home_page(request):
+    needSearchCity = True
+    if request.GET.get('name_store'):
+        try:
+            logger.info('busca de nome da loja na home:', request.GET['name_store'])
+            vitrines = Vitrine.objects.filter(nome = request.GET['name_store'])
+        except:
+            logger.warning('Houve um problema na busca de uma loja na home')
+    else:
+        vitrines = Vitrine.objects.filter()
+    if request.user.is_authenticated:
+        needSearchCity = False
+    else:
+        return render(request, 'blog/home.html', {'needSearchCity': needSearchCity, 'vitrines': vitrines})
 
 @login_required
 def perfil_cliente(request):
     perfil = Perfil.objects.filter(usuario=request.user)
     if perfil:
-        perfil = Perfil.objects.get(usuario=request.user)
-        encomendas = Encomenda.objects.filter(cliente=request.user)
-        return render(request, 'blog/perfilCliente.html', {'perfil': perfil, 'encomendas': encomendas})
+        try:
+            perfil = Perfil.objects.get(usuario=request.user)
+            encomendas = Encomenda.objects.filter(cliente=request.user)
+            return render(request, 'blog/perfilCliente.html', {'perfil': perfil, 'encomendas': encomendas})
+        except:
+            logger.warning('Houve um problema para passar o perfil ou encomendas para o template de perfil')
     return render(request, 'blog/perfilCliente.html', {'perfil': perfil})
 
 def vitrine_home_client(request, pk):
