@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="col-lg-6 mr-auto border">
-          <h3 class="col-sm m-2 border font-weight-light">Produtos</h3>
+          <h3 class="col-sm m-2 font-weight-light">Produtos</h3>
           <br>
           <div class="row">
             {% for produto in produtos %}
@@ -83,6 +83,9 @@
           <h3 class="col-lg m-3 font-weight-light">{{ vitrine.nome }}</h3>
           <div class="col-sm-auto mt-5 ml-3">
             <h5 class="font-weight-light"> {{vitrine.descricao }} </h5>
+          </div>
+          <div class="col-sm-auto mt-5 ml-3">
+            <h5 class="font-weight-light"> Número de acessos: {{vitrine.acessos }} </h5>
           </div>
         </div>
       </div>

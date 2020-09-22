@@ -32,6 +32,7 @@ class Vitrine(models.Model):
     estado = models.CharField(max_length=20, choices=estado, default='')
     categoria = models.CharField(max_length=20, choices=categoria)
     descricao = models.TextField(default='', blank=True)
+    acessos = models.BigIntegerField(default=0)
 
     def __str__(self):
         return self.nome

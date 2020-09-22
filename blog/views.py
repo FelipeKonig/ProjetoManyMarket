@@ -93,10 +93,35 @@ def encomendar_produto(request, pk_vitrine, pk_produto):
         "form":form, 'vitrine': vitrine, 'produto': produto, 'profile_exist': profile_exist
     })
 
+def home_vitrineFilters(request, filter):
+    needSearchCity = True
+    if request.GET.get('name_store'):
+        try:
+            logger.info('busca realizada de nome da loja na home')
+            vitrines = Vitrine.objects.filter(nome = request.GET['name_store'])
+        except:
+            logger.warning('Houve um problema na busca de uma loja na home')
+    elif filter == 'mais-acessos':
+        try:
+            vitrines = (Vitrine.objects.filter()).order_by('-acessos')
+            logger.info('vitrines filtradas')
+        except:
+            logger.warning('Houve um problema na filtragem das vitrines')
+    if request.user.is_authenticated:
+        needSearchCity = False
+    return render(request, 'blog/home.html', {'needSearchCity': needSearchCity,'vitrines': vitrines})
+
 def home_category(request,category):
     needSearchCity = True
-    vitrines = Vitrine.objects.filter(categoria = category)
-    logger.info('categoria de vitrines selecionada:', vitrines)
+    if request.GET.get('name_store'):
+        try:
+            logger.info('busca realizada de nome da loja na home')
+            vitrines = Vitrine.objects.filter(nome = request.GET['name_store'])
+        except:
+            logger.warning('Houve um problema na busca de uma loja na home')
+    else:
+        vitrines = Vitrine.objects.filter(categoria = category)
+        logger.info('categoria de vitrines selecionada')
     if request.user.is_authenticated:
         needSearchCity = False
     return render(request, 'blog/home.html', {'needSearchCity': needSearchCity,'vitrines': vitrines})
@@ -105,7 +130,7 @@ def home_page(request):
     needSearchCity = True
     if request.GET.get('name_store'):
         try:
-            logger.info('busca de nome da loja na home:', request.GET['name_store'])
+            logger.info('busca realizada de nome da loja na home')
             vitrines = Vitrine.objects.filter(nome = request.GET['name_store'])
         except:
             logger.warning('Houve um problema na busca de uma loja na home')
@@ -113,8 +138,7 @@ def home_page(request):
         vitrines = Vitrine.objects.filter()
     if request.user.is_authenticated:
         needSearchCity = False
-    else:
-        return render(request, 'blog/home.html', {'needSearchCity': needSearchCity, 'vitrines': vitrines})
+    return render(request, 'blog/home.html', {'needSearchCity': needSearchCity, 'vitrines': vitrines})
 
 @login_required
 def perfil_cliente(request):
@@ -132,6 +156,9 @@ def vitrine_home_client(request, pk):
     user_on = False
     vitrine = get_object_or_404(Vitrine, pk=pk)
     produtos = Produto.objects.filter(proprietario=vitrine)
+    vitrine.acessos += 1
+    vitrine.save()
+    logger.info('Número de acessos da vitrine:', vitrine.acessos)
     if request.user.is_authenticated:
         user_on = True
     return render(request, 'blog/vitrineHomeClient.html', {'vitrine': vitrine, 'produtos': produtos, 'user_on': user_on})
