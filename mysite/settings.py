@@ -58,11 +58,11 @@ LOGGING = {
     },
     'loggers':{
         '': {
-            'handlers': ['debug','console'],
+            'handlers': ['debug','console','errors'],
             'level': 'DEBUG',
         },
         'blog': {
-            'handlers': ['errors', 'debug'],
+            'handlers': ['errors'],
             'level': 'DEBUG',
         },
     }
@@ -92,7 +92,7 @@ INSTALLED_APPS = [
 ]
 
 # CRISPY
-CRISPY_TEMPLATE_PACK = 'bootstrap4' 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # AUTH_USER_MODEL = 'users.CustomUser'
 

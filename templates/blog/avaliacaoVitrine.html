@@ -1,0 +1,42 @@
+<div class="col-sm-auto mt-5 ml-3">
+  <h5 class="font-weight-light">Avaliação geral da vitrine:</h5>
+  <span class="star-rating">
+    {% if avaliacao.media_nota == 5 %}
+      <input type="radio" name="rating" value="1" checked><i></i>
+      <input type="radio" name="rating" value="2" checked><i></i>
+      <input type="radio" name="rating" value="3" checked><i></i>
+      <input type="radio" name="rating" value="4" checked><i></i>
+      <input type="radio" name="rating" value="5" checked><i></i>
+    {% elif avaliacao.media_nota == 4 %}
+      <input type="radio" name="rating" value="1" checked><i></i>
+      <input type="radio" name="rating" value="2" checked><i></i>
+      <input type="radio" name="rating" value="3" checked><i></i>
+      <input type="radio" name="rating" value="4" checked><i></i>
+      <span type="radio" name="rating" value="5"><i></i>
+    {% elif avaliacao.media_nota == 3 %}
+      <input type="radio" name="rating" value="1" checked><i></i>
+      <input type="radio" name="rating" value="2" checked><i></i>
+      <input type="radio" name="rating" value="3" checked><i></i>
+      <span type="radio" name="rating" value="4"><i></i>
+      <span type="radio" name="rating" value="5"><i></i>
+    {% elif avaliacao.media_nota == 2 %}
+      <input type="radio" name="rating" value="1" checked><i></i>
+      <input type="radio" name="rating" value="2" checked><i></i>
+      <span type="radio" name="rating" value="3"><i></i>
+      <span type="radio" name="rating" value="4"><i></i>
+      <span type="radio" name="rating" value="5"><i></i>
+    {% elif avaliacao.media_nota == 1 %}
+      <input type="radio" name="rating" value="1" checked><i></i>
+      <span type="radio" name="rating" value="2"><i></i>
+      <span type="radio" name="rating" value="3"><i></i>
+      <span type="radio" name="rating" value="4"><i></i>
+      <span type="radio" name="rating" value="5"><i></i>
+    {% else %}
+      <span type="radio" name="rating" value="1"><i></i>
+      <span type="radio" name="rating" value="2"><i></i>
+      <span type="radio" name="rating" value="3"><i></i>
+      <span type="radio" name="rating" value="4"><i></i>
+      <span type="radio" name="rating" value="5"><i></i>
+    {% endif %}
+</span>
+</div>

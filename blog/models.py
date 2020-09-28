@@ -37,6 +37,15 @@ class Vitrine(models.Model):
     def __str__(self):
         return self.nome
 
+class Avaliacao(models.Model):
+    vitrine = models.ForeignKey('blog.Vitrine', on_delete=models.CASCADE)
+    media_nota = models.PositiveSmallIntegerField(default=0)
+    somaTotal_nota = models.PositiveSmallIntegerField(default=0)
+    quantidade = models.BigIntegerField(default=0)
+
+    def __str__(self):
+        return 'avaliação da vitrine: {}'.format(self.vitrine.nome)
+
 class Produto(models.Model):
 
     categoria = (

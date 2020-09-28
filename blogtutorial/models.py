@@ -32,7 +32,7 @@ class PostLike( models.Model):
     post = models.ForeignKey('blogtutorial.Post', on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now=True)
 
-    def _str_(self):
+    def __str__(self):
         return '{} - {}'.format(self.post.title, self.user)
 
 class PostDislike( models.Model):
