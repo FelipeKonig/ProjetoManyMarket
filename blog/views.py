@@ -93,28 +93,12 @@ def encomendar_produto(request, pk_vitrine, pk_produto):
         "form":form, 'vitrine': vitrine, 'produto': produto, 'profile_exist': profile_exist
     })
 
-def home_vitrineFilters(request, filter):
+def home_vitrineFilters(request, filter, category):
     needSearchCity = True
-    if request.GET.get('name_store'):
-        vitrines = searchNameStore(request)
-    elif filter == 'mais-acessos':
-        try:
-            vitrines = (Vitrine.objects.filter()).order_by('-acessos')
-            logger.info('vitrines filtradas por numero de acessos')
-            for v in vitrines:
-                logger.debug(v.nome)
-                logger.debug(v.acessos)
-        except:
-            logger.warning('Houve um problema na filtragem das vitrines por mais acessos')
-    elif filter == 'melhores-avaliacoes':
-        try:
-            vitrines = Vitrine.objects.order_by('-avaliacao__media_nota')
-            logger.info('vitrines filtradas por ordem de avaliacoes')
-        except:
-            logger.critical('Houve um problema na filtragem das vitrines por melhores avaliacoes')
+    vitrines = filterStoresHome(request,filter, category)
     if request.user.is_authenticated:
         needSearchCity = False
-    context = {'needSearchCity': needSearchCity,'vitrines': vitrines}
+    context = {'needSearchCity': needSearchCity,'vitrines': vitrines, 'category': category}
     return render(request, 'blog/home.html', context)
 
 def home_category(request,category):
@@ -126,17 +110,20 @@ def home_category(request,category):
         logger.info('categoria de vitrines selecionada')
     if request.user.is_authenticated:
         needSearchCity = False
-    return render(request, 'blog/home.html', {'needSearchCity': needSearchCity,'vitrines': vitrines})
+    context = {'needSearchCity': needSearchCity,'vitrines': vitrines, 'category': category}
+    return render(request, 'blog/home.html', context)
 
 def home_page(request):
     needSearchCity = True
+    category = 'geral'
     if request.GET.get('name_store'):
         vitrines = searchNameStore(request)
     else:
         vitrines = Vitrine.objects.filter()
     if request.user.is_authenticated:
         needSearchCity = False
-    return render(request, 'blog/home.html', {'needSearchCity': needSearchCity, 'vitrines': vitrines})
+    context = {'needSearchCity': needSearchCity, 'vitrines': vitrines, 'category': category}
+    return render(request, 'blog/home.html', context)
 
 @login_required
 def perfil_cliente(request):
@@ -190,8 +177,8 @@ def vitrine_management(request):
     vitrine = Vitrine.objects.get(proprietario=request.user)
     produtos = Produto.objects.filter(proprietario=vitrine)
     encomendas = Encomenda.objects.filter(vendedor=vitrine)
-    return render(request, 'blog/vitrineManagementHome.html', {'produtos': produtos, 'encomendas': encomendas,
-     'showcase_exist': showcase_exist })
+    context = {'produtos': produtos, 'encomendas': encomendas,'showcase_exist': showcase_exist }
+    return render(request, 'blog/vitrineManagementHome.html', context)
 
 def searchNameStore(request):
     try:
@@ -201,6 +188,32 @@ def searchNameStore(request):
     except:
         logger.warning('Houve um problema na busca de uma loja na home')
         return ''
+
+def filterStoresHome(request, filter, category):
+    if request.GET.get('name_store'):
+        vitrines = searchNameStore(request)
+    elif filter == 'mais-acessos':
+        try:
+            if category == 'geral':
+                vitrines = (Vitrine.objects.filter()).order_by('-acessos')
+            else:
+                vitrines = (Vitrine.objects.filter(categoria__iexact=category)).order_by('-acessos')
+            logger.info('vitrines filtradas por numero de acessos')
+            for v in vitrines:
+                logger.debug(v.nome)
+                logger.debug(v.acessos)
+        except:
+            logger.warning('Houve um problema na filtragem das vitrines por mais acessos')
+    elif filter == 'melhores-avaliacoes':
+        try:
+            if category == 'geral':
+                vitrines = Vitrine.objects.order_by('-avaliacao__media_nota')
+            else:
+                vitrines = (Vitrine.objects.filter(categoria__iexact=category)).order_by('-avaliacao__media_nota')
+            logger.info('vitrines filtradas por ordem de avaliacoes')
+        except:
+            logger.critical('Houve um problema na filtragem das vitrines por melhores avaliacoes')
+    return vitrines
 
 def filterProdutosVitrine(request, vitrine):
     try:
