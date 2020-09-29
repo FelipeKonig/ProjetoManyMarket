@@ -111,7 +111,7 @@ def home_vitrineFilters(request, filter):
             vitrines = Vitrine.objects.order_by('-avaliacao__media_nota')
             logger.info('vitrines filtradas por ordem de avaliacoes')
         except:
-            logger.warning('Houve um problema na filtragem das vitrines por melhores avaliacoes')
+            logger.critical('Houve um problema na filtragem das vitrines por melhores avaliacoes')
     if request.user.is_authenticated:
         needSearchCity = False
     context = {'needSearchCity': needSearchCity,'vitrines': vitrines}
@@ -147,7 +147,7 @@ def perfil_cliente(request):
             encomendas = Encomenda.objects.filter(cliente=request.user)
             return render(request, 'blog/perfilCliente.html', {'perfil': perfil, 'encomendas': encomendas})
         except:
-            logger.warning('Houve um problema para passar o perfil ou encomendas para o template de perfil')
+            logger.error('Houve um problema para passar o perfil ou encomendas para o template de perfil')
     return render(request, 'blog/perfilCliente.html', {'perfil': perfil})
 
 def vitrine_home_client(request, pk):
@@ -155,6 +155,10 @@ def vitrine_home_client(request, pk):
     vitrine = get_object_or_404(Vitrine, pk=pk)
     produtos = Produto.objects.filter(proprietario=vitrine)
     avaliacao = Avaliacao.objects.get_or_create(vitrine=vitrine)[0]
+    if request.GET.get('name_product'):
+        produtos = searchNameProductStore(request.GET.get('name_product'), vitrine)
+    if request.GET.get('filter_product'):
+        produtos = filterProdutosVitrine(request.GET.get('filter_product'), vitrine)
     if request.POST.get('rating'):
         if request.user.is_authenticated:
             calculateRatingStore(vitrine, request.POST.get('rating'), avaliacao, request.user)
@@ -191,20 +195,44 @@ def vitrine_management(request):
 
 def searchNameStore(request):
     try:
-        logger.info('busca realizada de nome da loja na home')
-        vitrines = Vitrine.objects.filter(nome = request.GET['name_store'])
+        vitrines = Vitrine.objects.filter(nome__icontains = request.GET['name_store'])
+        logger.info('busca por nome da loja realizada na home')
         return vitrines
     except:
         logger.warning('Houve um problema na busca de uma loja na home')
+        return ''
+
+def filterProdutosVitrine(request, vitrine):
+    try:
+        if request == 'menor-preco':
+            produtos = Produto.objects.filter(proprietario = vitrine).order_by('-valor')
+        elif request == 'maior-preco':
+            produtos = Produto.objects.filter(proprietario = vitrine).order_by('valor')
+
+        logger.info('busca de produtos por filtro realizada na vitrine')
+        return produtos
+    except:
+        logger.warning('Houve um problema na busca de um produto por filtro na vitrine')
+        return ''
+
+def searchNameProductStore(request, vitrine):
+    try:
+        produtos = Produto.objects.filter(nome__icontains = request, proprietario = vitrine)
+        logger.info('busca de nome do produto realizada na vitrine')
+        return produtos
+    except:
+        logger.warning('Houve um problema na busca de um produto por nome na vitrine')
         return ''
 
 def calculateRatingStore(vitrine,rating, avaliacao, user_logado):
     logger.info(avaliacao)
     try:
         avaliacao.quantidade += 1
+
         logger.info('quantidade total de avaliacoes: {}'.format(avaliacao.quantidade))
         logger.info('média de avaliação: {}'.format(avaliacao.media_nota))
         logger.info('avaliacao do usuario: {}'.format(int(rating)))
+
         avaliacao.somaTotal_nota = int(avaliacao.somaTotal_nota + int(rating))
         logger.info('soma das notas: {}'.format((avaliacao.somaTotal_nota + int(rating))))
         new_rating = int(avaliacao.somaTotal_nota / avaliacao.quantidade)
