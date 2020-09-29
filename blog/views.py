@@ -105,10 +105,17 @@ def home_vitrineFilters(request, filter):
                 logger.debug(v.nome)
                 logger.debug(v.acessos)
         except:
-            logger.warning('Houve um problema na filtragem das vitrines')
+            logger.warning('Houve um problema na filtragem das vitrines por mais acessos')
+    elif filter == 'melhores-avaliacoes':
+        try:
+            vitrines = Vitrine.objects.order_by('-avaliacao__media_nota')
+            logger.info('vitrines filtradas por ordem de avaliacoes')
+        except:
+            logger.warning('Houve um problema na filtragem das vitrines por melhores avaliacoes')
     if request.user.is_authenticated:
         needSearchCity = False
-    return render(request, 'blog/home.html', {'needSearchCity': needSearchCity,'vitrines': vitrines})
+    context = {'needSearchCity': needSearchCity,'vitrines': vitrines}
+    return render(request, 'blog/home.html', context)
 
 def home_category(request,category):
     needSearchCity = True
