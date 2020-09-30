@@ -13,5 +13,6 @@ urlpatterns = [
     path('vitrine/gerenciamento', views.vitrine_management, name='vitrine_management'),
     path('vitrine/cadastro/produto', views.produto_register, name='produto_register'),
     path('vitrine/<int:pk_vitrine>/produto/<int:pk_produto>/encomenda', views.encomendar_produto, name='produto_encomenda'),
+    path('vitrine/<int:pk_vitrine>/<str:filter>/', views.vitrine_home_client_produtoFilter, name='vitrine_home_client_produtoFilters'),
     path('vitrine/<int:pk>/', views.vitrine_home_client, name='vitrine_home_client')
 ]

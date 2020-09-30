@@ -115,14 +115,14 @@ def home_category(request,category):
 
 def home_page(request):
     needSearchCity = True
-    category = 'geral'
+
     if request.GET.get('name_store'):
         vitrines = searchNameStore(request)
     else:
         vitrines = Vitrine.objects.filter()
     if request.user.is_authenticated:
         needSearchCity = False
-    context = {'needSearchCity': needSearchCity, 'vitrines': vitrines, 'category': category}
+    context = {'needSearchCity': needSearchCity, 'vitrines': vitrines, 'category': 'geral'}
     return render(request, 'blog/home.html', context)
 
 @login_required
@@ -139,13 +139,13 @@ def perfil_cliente(request):
 
 def vitrine_home_client(request, pk):
     user_on = False
+
     vitrine = get_object_or_404(Vitrine, pk=pk)
     produtos = Produto.objects.filter(proprietario=vitrine)
     avaliacao = Avaliacao.objects.get_or_create(vitrine=vitrine)[0]
+
     if request.GET.get('name_product'):
         produtos = searchNameProductStore(request.GET.get('name_product'), vitrine)
-    if request.GET.get('filter_product'):
-        produtos = filterProdutosVitrine(request.GET.get('filter_product'), vitrine)
     if request.POST.get('rating'):
         if request.user.is_authenticated:
             calculateRatingStore(vitrine, request.POST.get('rating'), avaliacao, request.user)
@@ -155,7 +155,20 @@ def vitrine_home_client(request, pk):
         logger.info('Cliente acessou uma vitrine')
     if request.user.is_authenticated:
         user_on = True
-    context = {'vitrine': vitrine, 'produtos': produtos, 'avaliacao': avaliacao, 'user_on': user_on}
+    context = {'vitrine': vitrine, 'produtos': produtos, 'avaliacao': avaliacao, 'user_on': user_on, 'filter': 'geral'}
+    return render(request, 'blog/vitrineHomeClient.html', context)
+
+def vitrine_home_client_produtoFilter(request, pk_vitrine, filter):
+    user_on = False
+
+    vitrine = get_object_or_404(Vitrine, pk=pk_vitrine)
+    avaliacao = Avaliacao.objects.filter(vitrine=vitrine)[0]
+    produtos = filterProdutosVitrine(filter, vitrine)
+
+    if request.user.is_authenticated:
+        user_on = True
+
+    context = {'vitrine': vitrine, 'produtos': produtos, 'user_on': user_on, 'avaliacao': avaliacao, 'filter': filter}
     return render(request, 'blog/vitrineHomeClient.html', context)
 
 @login_required
@@ -217,10 +230,12 @@ def filterStoresHome(request, filter, category):
 
 def filterProdutosVitrine(request, vitrine):
     try:
+        logger.info(request)
         if request == 'menor-preco':
-            produtos = Produto.objects.filter(proprietario = vitrine).order_by('-valor')
-        elif request == 'maior-preco':
             produtos = Produto.objects.filter(proprietario = vitrine).order_by('valor')
+
+        elif request == 'maior-preco':
+            produtos = Produto.objects.filter(proprietario = vitrine).order_by('-valor')
 
         logger.info('busca de produtos por filtro realizada na vitrine')
         return produtos
