@@ -163,7 +163,14 @@ def vitrine_home_client_produtoFilter(request, pk_vitrine, filter):
 
     vitrine = get_object_or_404(Vitrine, pk=pk_vitrine)
     avaliacao = Avaliacao.objects.filter(vitrine=vitrine)[0]
-    produtos = filterProdutosVitrine(filter, vitrine)
+    produtos = filterProductsStore(filter, vitrine)
+
+    if request.GET.get('name_product'):
+        produtos = searchNameProductStore(request.GET.get('name_product'), vitrine)
+
+    if request.POST.get('rating'):
+        if request.user.is_authenticated:
+            calculateRatingStore(vitrine, request.POST.get('rating'), avaliacao, request.user)
 
     if request.user.is_authenticated:
         user_on = True
@@ -181,8 +188,19 @@ def vitrine_home_seller(request):
         showcase_exist = True
         vitrine = Vitrine.objects.get(proprietario=user)
         produtos = Produto.objects.filter(proprietario=vitrine)
-        return render(request, 'blog/vitrineHomeSeller.html', {'showcase_exist': showcase_exist,
-        'vitrine': vitrine, 'produtos': produtos })
+        context = {'showcase_exist': showcase_exist, 'vitrine': vitrine, 'produtos': produtos, 'category': 'geral'}
+        return render(request, 'blog/vitrineHomeSeller.html', context)
+
+def vitrine_home_seller_category(request, category, pk):
+    try:
+        vitrine = get_object_or_404(Vitrine, pk = pk)
+        produtos = Produto.objects.filter(proprietario=vitrine, categoria__iexact=category)
+        logger.info('A vitrine filtou seus produtos pela categoria {}'.format(category))
+    except:
+        logger.warning('Não foi possível a vitrine filtrar seus produtos')
+
+    context = {'showcase_exist': True, 'vitrine': vitrine, 'produtos': produtos, 'category': category}
+    return render(request, 'blog/vitrineHomeSeller.html', context)
 
 @login_required
 def vitrine_management(request):
@@ -228,7 +246,7 @@ def filterStoresHome(request, filter, category):
             logger.critical('Houve um problema na filtragem das vitrines por melhores avaliacoes')
     return vitrines
 
-def filterProdutosVitrine(request, vitrine):
+def filterProductsStore(request, vitrine):
     try:
         logger.info(request)
         if request == 'menor-preco':

@@ -9,23 +9,20 @@
           <div class="row">
             <h5 class="col-sm-12 font-weight-light text-center">Sua categoria de produtos</h5>
             <nav class="col-sm-12 mt-2 nav flex-column text-center">
-              <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
-              data-content="Essa função ainda não está funcionando D:">
+              <a class="nav-link" href="{% url 'vitrine_home_seller_category' category='celulares' pk=vitrine.pk %}">
               Celulares
               </a>
-              <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
-              data-content="Essa função ainda não está funcionando D:">
+              <a class="nav-link" href="{% url 'vitrine_home_seller_category' category='informatica' pk=vitrine.pk %}">
               Informática
               </a>
-              <a class="nav-link" href="#" data-toggle="popover" data-placement="right" data-trigger="hover"
-              data-content="Essa função ainda não está funcionando D:">
+              <a class="nav-link" href="{% url 'vitrine_home_seller_category' category='moda' pk=vitrine.pk %}">
               Moda
               </a>
             </nav>
           </div>
         </div>
         <div class="col-lg-6 mr-auto border">
-          <h3 class="col-sm m-2 border font-weight-light">Seus produtos</h3>
+          <h3 class="col-sm m-2 font-weight-light">Seus produtos</h3>
           <br>
           <div class="row">
             {% for produto in produtos %}

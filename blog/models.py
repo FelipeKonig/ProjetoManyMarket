@@ -102,4 +102,4 @@ class Encomenda(models.Model):
     comentario = models.TextField(default='')
 
     def __str__(self):
-        return self.nome
+        return 'encomenda do cliente: {}, com os produtos: {}, da vitrine {}'.format(self.cliente,self.produto.nome, self.vendedor.nome)
