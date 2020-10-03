@@ -4,7 +4,7 @@
 {% block content %}
   <div class="container">
     <p class="display-4">Adicionar produto</p>
-    <form method="POST" class="post-form">
+    <form method="POST" class="post-form" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form|bootstrap }}
       <br>

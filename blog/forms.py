@@ -22,7 +22,7 @@ class PerfilForm(forms.ModelForm):
 
     class Meta:
         model = Perfil
-        fields = ('cidade', 'estado', 'bairro', 'rua', 'numero', 'cep', 'ponto_referencia')
+        fields = ('foto','cidade', 'estado', 'bairro', 'rua', 'numero', 'cep', 'ponto_referencia')
 
     def __init__(self, *args, **kwargs):
         super(PerfilForm, self).__init__(*args, **kwargs)
@@ -35,14 +35,14 @@ class VitrineForm(forms.ModelForm):
 
     class Meta:
         model = Vitrine
-        fields = ('nome', 'cidade', 'categoria','descricao')
+        fields = ('foto','nome', 'cidade', 'categoria','descricao')
 
 class ProdutoForm(forms.ModelForm):
     valor = forms.DecimalField(min_value =0.01)
 
     class  Meta:
         model = Produto
-        fields = ('nome', 'categoria', 'valor','quantidade','data_criacao','descricao')
+        fields = ('foto','nome', 'categoria', 'valor','quantidade','data_criacao','descricao')
 
 class EncomendaForm(forms.ModelForm):
 

@@ -27,8 +27,8 @@
           <div class="row">
             {% for produto in produtos %}
             <div class="card m-2" style="width:200px;">
-              <img class="card-img-top" src="{% static "media/produto.jpeg" %}"
-              alt="Imagem padrão para os produtos, contém vários objetos desenhados como roupa, bolsa, camera, celular e afins">
+              <img class="card-img-top" src="{{ produto.foto.url }}"
+              alt="Imagem de capa selecionada pela vitrine para representar o produto">
               <div class="card-body">
                 <h4 class="card-title">{{ produto.nome }}</h4>
                 <p class="card-text">R$ {{ produto.valor }}</p>
@@ -48,8 +48,8 @@
         </script>
         <div class="col-lg-4 border">
           <br>
-          <img src="{% static "media/vitrine.png" %}" class="img-thumbnail mt-0"
-           alt="Imagem padrão para todas as vetrines, contém uma lojinha cinza desenhada com detalhes em azul, marrom e laranja">
+          <img src="{{ vitrine.foto.url }}" class="img-thumbnail mt-0"
+           alt="Imagem de capa selecionada pela respectiva vitrine para representa-la">
           <h3 class="col-lg m-3 font-weight-light">{{ vitrine.nome }}</h3>
           <div class="col-sm-auto mt-5 ml-3">
             <h5 class="font-weight-light"> {{ vitrine.descricao }} </h5>

@@ -28,6 +28,7 @@ class Vitrine(models.Model):
 
     proprietario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     nome = models.CharField(max_length=200)
+    foto = models.ImageField(blank=True, default='vitrine.png', upload_to='vitrines')
     cidade = models.CharField(max_length=200)
     estado = models.CharField(max_length=20, choices=estado, default='')
     categoria = models.CharField(max_length=20, choices=categoria)
@@ -56,6 +57,7 @@ class Produto(models.Model):
 
     proprietario = models.ForeignKey('blog.Vitrine', on_delete=models.CASCADE)
     nome = models.CharField(max_length=200)
+    foto = models.ImageField(blank=True, default='produto.jpeg', upload_to='produtos')
     categoria = models.CharField(max_length=20, choices=categoria)
     descricao = models.TextField(default='', null=True)
     valor = models.DecimalField(max_digits=7, decimal_places=2)
@@ -83,6 +85,7 @@ class Perfil(models.Model):
     )
 
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    foto = models.ImageField(blank=True, default='user.png', upload_to='perfis')
     cidade = models.CharField(max_length=100)
     estado = models.CharField(max_length=20, choices=estado)
     bairro = models.CharField(max_length=200, default='')

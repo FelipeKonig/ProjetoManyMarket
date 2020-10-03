@@ -27,8 +27,8 @@
               <div class="row ml-2">
                 {% for produto in produtos %}
                 <div class="card m-2" style="width:200px">
-                  <img class="card-img-top" src="{% static "media/produto.jpeg" %}"
-                  alt="Imagem padrão para os produtos na qual contém vários objetos desenhados como roupa, bolsa, camera, celular e afins">
+                  <img class="card-img-top" src="{{ produto.foto.url }}"
+                  alt="Imagem de capa selecionada pela vitrine para representar o produto">
                   <div class="card-body">
                     <h4 class="card-title">{{ produto.nome }}</h4>
                     <p class="card-text">R$ {{ produto.valor }}.</p>
@@ -45,8 +45,8 @@
                 <div class="row ml-2">
                   {% for encomenda in encomendas %}
                   <div class="card m-2" style="width:200px;">
-                    <img class="card-img-top" src="{% static "media/produto.jpeg" %}"
-                    alt="Imagem padrão para os produtos, contém vários objetos desenhados como roupa, bolsa, camera, celular e afins">
+                    <img class="card-img-top" src="{{ encomenda.produto.foto.url }}"
+                    alt="Imagem de capa selecionada pela vitrine para representar o produto">
                     <div class="card-body">
                       <h4 class="card-title">{{ encomenda.produto.nome }}</h4>
                       <p class="card-text">R$ {{ encomenda.produto.valor }}</p>

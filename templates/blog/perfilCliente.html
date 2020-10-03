@@ -4,13 +4,24 @@
 {% block content %}
   <div class="container-fluid col-sm border">
     <div class="row">
-      <div class="col-sm-3 m-2 border">
-        <img src="{% static "media/user.png" %}" class="img-thumbnail mt-0" style="width:100%;"
-         alt="Imagem padrão para todos os usuários, contém fundo branco, duas mulheres, dois homens no centro">
-         <button type="button" class="btn btn-block btn-info m-2 p-2" data-toggle="popover" data-placement="right"
-         data-trigger="hover" data-content="Essa função ainda não está funcionando D:">
-            Alterar minha foto
-         </button>
+      <div class="col-sm-3 m-2">
+        {% if perfil %}
+          <img src="{{ perfil.foto.url }}" class="img-thumbnail mt-0 mb-2" style="width:100%;"
+           alt="Imagem de perfil escolhida pelo próprio usuário para representa-lo dentro da plataforma">
+          <form method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+              <div class="custom-file mb-3">
+                <input type="file" name="image" required/>
+                <div class="invalid-feedback">
+                 Você não selecionou uma foto
+                </div>
+               </div>
+               <input type="submit" class="btn btn-block btn-info mt-2" value="Alterar minha foto" />
+            </form>
+        {% else %}
+          <img src="{% static "media/user.png" %}" class="img-thumbnail mt-0" style="width:100%;"
+          alt="Imagem padrão para todos os usuários sem perfil cadastrado, contém fundo branco, duas mulheres, dois homens no centro">
+        {% endif %}
       </div>
       <script>
         $(document).ready(function(){
@@ -18,7 +29,7 @@
         });
       </script>
       <div class="col-sm-8 m-2" id="profile_information">
-        <h3 class="col-sm m-2 font-weight-light">Seu perfil</h3>
+        <h3 class="col-sm m-2 font-weight-light">Suas informações</h3>
         <br>
         <h5 class="col-sm-auto m-2 mb-4 font-weight-light">
           Nome: {{ request.user.first_name }} {{ request.user.last_name }}
@@ -60,8 +71,8 @@
         <div class="row">
           {% for encomenda in encomendas %}
           <div class="card m-2" style="width:200px;">
-            <img class="card-img-top" src="{% static "media/produto.jpeg" %}"
-            alt="Imagem padrão para os produtos, contém vários objetos desenhados como roupa, bolsa, camera, celular e afins">
+            <img class="card-img-top" src="{{ encomenda.produto.foto.url }}"
+            alt="Imagem de capa selecionada pela vitrine para representar o produto">
             <div class="card-body">
               <h4 class="card-title">{{ encomenda.produto.nome }}</h4>
               <p class="card-text">R$ {{ encomenda.produto.valor }}</p>
@@ -80,4 +91,21 @@
     </div>
   </div>
 
+  <script>
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+  </script>
 {% endblock %}

@@ -29,7 +29,7 @@ def register(request):
 def vitrine_register(request):
     register = False
     if request.method == "POST":
-        form = VitrineForm(request.POST)
+        form = VitrineForm(request.POST, request.FILES)
         if form.is_valid():
             register = True
             vitrine = form.save(commit=False)
@@ -43,7 +43,7 @@ def vitrine_register(request):
 @login_required
 def produto_register(request):
         if request.method == "POST":
-            form = ProdutoForm(request.POST)
+            form = ProdutoForm(request.POST, request.FILES)
             if form.is_valid():
                 produto = form.save(commit=False)
                 vitrine = Vitrine.objects.get(proprietario=request.user)
@@ -57,7 +57,7 @@ def produto_register(request):
 
 def perfil_register(request):
     if request.method == "POST":
-        form = PerfilForm(request.POST)
+        form = PerfilForm(request.POST, request.FILES)
         if form.is_valid():
             perfil = form.save(commit=False)
             perfil.usuario = request.user
@@ -127,7 +127,17 @@ def home_page(request):
 
 @login_required
 def perfil_cliente(request):
-    perfil = Perfil.objects.filter(usuario=request.user)
+
+    perfil = Perfil.objects.get(usuario=request.user)
+
+    if request.method == "POST":
+        logger.info(' nova imagem de perfil: {}'.format(request.FILES.get('image')))
+        try:
+            perfil.foto = request.FILES.get('image')
+            perfil.save()
+            logger.info('foto de perfil atualizada')
+        except:
+            logger.info('a foto de perfil não pode ser atualizada')
     if perfil:
         try:
             perfil = Perfil.objects.get(usuario=request.user)

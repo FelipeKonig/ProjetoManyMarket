@@ -6,8 +6,8 @@
   <div class="container-fluid col-md">
     <div class="row">
       <div class="col-md-4 border">
-        <img src="{% static "media/produto.jpeg" %}" class="img-thumbnail m-2" style="width:100%;"
-         alt="Imagem padrão para todas as vetrines, contém uma lojinha cinza desenhada com detalhes em azul, marrom e laranja">
+        <img src="{{ produto.foto.url }}" class="img-thumbnail m-2" style="width:100%;"
+         alt="Imagem de capa selecionada pela vitrine para representar o produto">
          <h2 class="font-weight-light m-2 mt-3 ml-3"> {{ produto.nome }} </h2>
          <h3 class="font-weight-light m-2 mt-5 ml-3"> {{ produto.descricao }} </h3>
          <h3 class="font-weight-light m-2 mt-5 ml-3"> Quantidade: {{ produto.quantidade }} </h3>
