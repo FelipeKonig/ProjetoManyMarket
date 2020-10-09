@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.http import JsonResponse
 from django.core import serializers
 from django.template.loader import render_to_string
+from django.contrib import messages
 
 import logging
 
@@ -20,7 +21,10 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Usuário cadastrado com sucesso')
             return redirect('home')
+        else:
+            messages.warning(request, 'Usuário não cadastrado')
     else:
         form = RegisterForm()
         return render(request, "registration/register.html", {"form":form})
@@ -35,7 +39,10 @@ def vitrine_register(request):
             vitrine = form.save(commit=False)
             vitrine.proprietario = request.user
             vitrine.save()
+            messages.success(request, 'Vitrine registrada com sucesso')
             return redirect('vitrine_home_seller')
+        else:
+            messages.warning(request, 'Não foi possível registrar a vitrine')
     else:
         form = VitrineForm()
     return render(request, 'blog/vitrineRegister.html', {'form': form})
@@ -49,7 +56,10 @@ def produto_register(request):
                 vitrine = Vitrine.objects.get(proprietario=request.user)
                 produto.proprietario = vitrine
                 produto.save()
+                messages.success(request, 'Produto registrado com sucesso')
                 return redirect('vitrine_home_seller')
+            else:
+                messages.warning(request, 'Não foi possível cadastrar o produto')
         else:
             form = ProdutoForm()
         showcase_exist = True
@@ -62,7 +72,10 @@ def perfil_register(request):
             perfil = form.save(commit=False)
             perfil.usuario = request.user
             perfil.save()
+            messages.success(request, 'Perfil cadastrado com sucesso')
             return redirect('cliente_perfil')
+        else:
+            messages.warning(request, 'Não foi possível cadastrar o perfil')
     else:
         form = PerfilForm()
     return render(request, "blog/perfilRegister.html", {"form":form})
@@ -86,7 +99,10 @@ def encomendar_produto(request, pk_vitrine, pk_produto):
             encomenda.produto = produto
             encomenda.data_pedido = timezone.now()
             encomenda.save()
+            messages.success(request, 'Encomenda realizada com sucesso')
             return redirect('cliente_perfil')
+        else:
+            messages.warning(request, 'Não foi possível realizar a encomenda')
     else:
         form = EncomendaForm()
     return render(request, 'blog/produtoEncomenda.html', {
@@ -128,15 +144,17 @@ def home_page(request):
 @login_required
 def perfil_cliente(request):
 
-    perfil = Perfil.objects.get(usuario=request.user)
+    perfil = Perfil.objects.filter(usuario=request.user)
 
     if request.method == "POST":
         logger.info(' nova imagem de perfil: {}'.format(request.FILES.get('image')))
         try:
             perfil.foto = request.FILES.get('image')
             perfil.save()
+            messages.sucess(request, 'Foto de perfil atualizada com sucesso')
             logger.info('foto de perfil atualizada')
         except:
+            messages.warning(request, 'Não foi possível atualizar sua foto')
             logger.info('a foto de perfil não pode ser atualizada')
     if perfil:
         try:
@@ -192,13 +210,16 @@ def vitrine_home_client_produtoFilter(request, pk_vitrine, filter):
 def vitrine_home_seller(request):
     user = request.user
     vitrine = Vitrine.objects.filter(proprietario=user)
+
+
     if not vitrine:
         return render(request, 'blog/vitrineHomeSeller.html')
     else:
         showcase_exist = True
         vitrine = Vitrine.objects.get(proprietario=user)
+        avaliacao = Avaliacao.objects.filter(vitrine=vitrine)[0]
         produtos = Produto.objects.filter(proprietario=vitrine)
-        context = {'showcase_exist': showcase_exist, 'vitrine': vitrine, 'produtos': produtos, 'category': 'geral'}
+        context = {'showcase_exist': showcase_exist, 'vitrine': vitrine, 'produtos': produtos, 'avaliacao': avaliacao, 'category': 'geral'}
         return render(request, 'blog/vitrineHomeSeller.html', context)
 
 def vitrine_home_seller_category(request, category, pk):

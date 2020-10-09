@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from django.contrib.messages import constants as messages
 from .local_settings import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -181,6 +182,15 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+#Constantes para mensagens bootstrap4
+MESSAGE_TAGS = {
+	messages.DEBUG: 'alert-info',
+	messages.INFO: 'alert-info',
+	messages.SUCCESS: 'alert-success',
+	messages.WARNING: 'alert-warning',
+	messages.ERROR: 'alert-danger',
+}
 
 
 # Static files (CSS, JavaScript, Images)
