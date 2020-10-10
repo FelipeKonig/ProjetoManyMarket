@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.http import JsonResponse
-from django.core import serializers
 from django.template.loader import render_to_string
 from django.contrib import messages
 
@@ -186,6 +185,29 @@ def vitrine_home_client(request, pk):
     context = {'vitrine': vitrine, 'produtos': produtos, 'avaliacao': avaliacao, 'user_on': user_on, 'filter': 'geral'}
     return render(request, 'blog/vitrineHomeClient.html', context)
 
+def avaliacao_vitrine(request):
+    user_on = False
+    if request.user.is_authenticated:
+        user_on = True
+
+    vitrine = get_object_or_404(Vitrine, pk=request.POST.get('id'))
+    produtos = Produto.objects.filter(proprietario=vitrine)
+    avaliacao = Avaliacao.objects.get_or_create(vitrine=vitrine)[0]
+
+    logger.info(vitrine)
+    logger.info(avaliacao.media_nota)
+    logger.info(request.POST.get('rating')[-1])
+
+    if request.POST.get('rating'):
+        if request.user.is_authenticated:
+            calculateRatingStore(vitrine, request.POST.get('rating')[-1], avaliacao, request.user)
+
+    context = {'vitrine': vitrine, 'produtos': produtos, 'avaliacao': avaliacao, 'user_on': user_on, 'filter': 'geral'}
+
+    if request.is_ajax():
+        html = render_to_string('blog/avaliacaoVitrine.html', context, request=request)
+        return JsonResponse({'form': html})
+
 def vitrine_home_client_produtoFilter(request, pk_vitrine, filter):
     user_on = False
 
@@ -210,7 +232,6 @@ def vitrine_home_client_produtoFilter(request, pk_vitrine, filter):
 def vitrine_home_seller(request):
     user = request.user
     vitrine = Vitrine.objects.filter(proprietario=user)
-
 
     if not vitrine:
         return render(request, 'blog/vitrineHomeSeller.html')

@@ -5,7 +5,7 @@
     <div class="col-lg-auto">
       <div class="row">
         <form class="col-md-12 mt-2" method="get">
-          <input type="text" name="name_product" class="col-md-4 m-1" placeholder="Qual produto você procura?">
+          <input type="text" name="name_product" class="col-lg-4 m-1" placeholder="Qual produto você procura?">
           <button type="submit" class="col-md-2 btn btn-info btn-md ">
             Buscar
           </button>
@@ -78,10 +78,12 @@
           <div class="col-sm-auto mt-5 ml-3">
             <h5 class="font-weight-light"> Número de acessos: {{vitrine.acessos }} </h5>
           </div>
-          {% include "blog/avaliacaoVitrine.html" %}
+          <div id="avaliacao-section">
+            {% include "blog/avaliacaoVitrine.html" %}
+          </div>
           {% if request.user != vitrine.proprietario and user_on == True %}
             <div class="col-sm-auto mt-5 ml-3">
-              <form method="post">
+              <form url='{url "avaliacao_vitrine" }' id="form-avaliacao" method="post">
                 {% csrf_token %}
                 <h5 class="font-weight-light">Sua avaliação da vitrine:</h5>
                 <span class="star-rating">
@@ -92,7 +94,9 @@
                   <input type="radio" name="rating" value="5"><i></i>
                 </span>
                 <br>
-                <button class="btn btn-info ml-2 mt-2" type="submit">Confirmar</button>
+                <button class="btn btn-info ml-2 mt-2" type="submit" name="vitrine_id" value="{{ vitrine.id }}" id="avaliacao">
+                  Confirmar
+                </button>
               </form>
             </div>
           {% endif %}
