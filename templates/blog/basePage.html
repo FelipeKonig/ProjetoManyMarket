@@ -21,9 +21,6 @@
           var pk = $('#avaliacao').attr('value');
           var rating = $(this).serialize();
           var test = $('#form-avaliacao').val();
-          console.log(test)
-          console.log(pk)
-          console.log(rating)
           $.ajax({
             type: 'POST',
             url: '{% url "avaliacao_vitrine" %}',

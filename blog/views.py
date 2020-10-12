@@ -145,19 +145,29 @@ def perfil_cliente(request):
 
     perfil = Perfil.objects.filter(usuario=request.user)
 
-    if request.method == "POST":
-        logger.info(' nova imagem de perfil: {}'.format(request.FILES.get('image')))
-        try:
-            perfil.foto = request.FILES.get('image')
-            perfil.save()
-            messages.sucess(request, 'Foto de perfil atualizada com sucesso')
-            logger.info('foto de perfil atualizada')
-        except:
-            messages.warning(request, 'Não foi possível atualizar sua foto')
-            logger.info('a foto de perfil não pode ser atualizada')
+    # if request.method == "POST":
+    #     logger.info(' nova imagem de perfil: {}'.format(request.FILES.get('image')))
+    #     try:
+    #         perfil.foto = request.FILES.get('image')
+    #         perfil.save()
+    #         messages.sucess(request, 'Foto de perfil atualizada com sucesso')
+    #         logger.info('foto de perfil atualizada')
+    #     except:
+    #         messages.warning(request, 'Não foi possível atualizar sua foto')
+    #         logger.info('a foto de perfil não pode ser atualizada')
     if perfil:
+        perfil = Perfil.objects.get(usuario=request.user)
+        if request.method == "POST":
+            logger.info(' nova imagem de perfil: {}'.format(request.FILES.get('image')))
+            try:
+                perfil.foto = request.FILES.get('image')
+                perfil.save()
+                messages.success(request, 'Foto de perfil atualizada com sucesso')
+                logger.info('foto de perfil atualizada')
+            except:
+                messages.warning(request, 'Não foi possível atualizar sua foto')
+                logger.info('a foto de perfil não pode ser atualizada')
         try:
-            perfil = Perfil.objects.get(usuario=request.user)
             encomendas = Encomenda.objects.filter(cliente=request.user)
             return render(request, 'blog/perfilCliente.html', {'perfil': perfil, 'encomendas': encomendas})
         except:
