@@ -9,7 +9,7 @@
 
 - [Sobre](#Sobre)
 - [Tecnologias Utilizadas](#Tecnologias-utilizadas)
-- [Algumas funcionalidades]("#Algumas-funcionalidades")
+- [Algumas funcionalidades](#Algumas-funcionalidades)
 - [Autor](#Autor)
 
 ## :pushpin: <a name="Sobre">Sobre</a>  
