@@ -21,6 +21,7 @@ Projeto de web desenvolvido em Django, utilizando Bootstrap, CSS e MySQL. Site s
 - [Django](https://www.djangoproject.com/)
 - [Python](https://www.python.org/)
 - [Bootstrap](https://getbootstrap.com/)
+- [HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
 - [CSS](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
 - [MySQL](https://www.mysql.com/)
 
